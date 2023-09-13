@@ -1,5 +1,5 @@
 // Canonical.cpp
-#include "eta/hsm/tests/Canonical.hpp"
+#include "Canonical.hpp"
 
 namespace eta {
 namespace hsm {

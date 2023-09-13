@@ -8,7 +8,6 @@
 
 namespace eta {
 namespace hsm {
-namespace detail
 
 enum class Semantics
 {
@@ -394,7 +393,7 @@ struct StateMachineTraits
     using Event = Event_;
     using StateEnum = StateEnum_;
 
-    ETA_NAMED_EVENT(StateTransition, "StateTransitionEventName", (Event, event), (StateEnum, from), (StateEnum, to));
+    // ETA_NAMED_EVENT(StateTransition, "StateTransitionEventName", (Event, event), (StateEnum, from), (StateEnum, to));
 
     static constexpr DefaultActions kDefaultActions = kDefaultActions_;
     static constexpr bool kClearTimersOnExit = false;  // could make default once all state machines support it
@@ -410,7 +409,7 @@ public:
     /// Expose type of Event so that derived classes can see it
     using Event = typename StateMachineTraits::Event;
     using StateEnum = typename StateMachineTraits::StateEnum;
-    using StateTransition = typename StateMachineTraits::StateTransition;
+    //using StateTransition = typename StateMachineTraits::StateTransition;
     static constexpr DefaultActions kDefaultActions = StateMachineTraits::kDefaultActions;
     static constexpr bool kClearTimersOnExit = StateMachineTraits::kClearTimersOnExit;
 
@@ -450,4 +449,4 @@ protected:
 } // namespace hsm
 } // namespace eta
 
-#include "eta/hsm/Hsm-inl.hpp"
+#include "Hsm-inl.hpp"

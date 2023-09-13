@@ -1,8 +1,8 @@
 // Canonical.hpp
 
 // CDPlayer.cpp
-#include "eta/chrono/FakeLocalClock.hpp"
-#include "eta/hsm/Hsm.hpp"
+//#include "eta/chrono/FakeLocalClock.hpp"
+#include "../Hsm.hpp"
 #include "TestLog.hpp"
 #include <chrono>
 
@@ -47,7 +47,7 @@ enum class CanonicalState
     eS211,
 };
 
-using Clock = eta::chrono::FakeLocalClock<>;
+using Clock = std::chrono::steady_clock;
 
 class Canonical : public StateMachine<Canonical, hsm::StateMachineTraits<CanonicalEvent, CanonicalState, Clock>>
 {
