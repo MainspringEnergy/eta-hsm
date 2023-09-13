@@ -1,0 +1,23 @@
+@startuml
+state Alive {
+  [*] --> Sober
+  Alive : entry / TestLog::instance() << "enter_Alive " << std::endl;
+  Alive : entry / mAccumultedEntryExit += static_cast<int>(ExampleState::eAlive);
+  Alive : entry / mAlive = true;
+  Alive : exit / TestLog::instance() << "exit_Alive " << std::endl;
+  Alive : exit / mAccumultedEntryExit -= static_cast<int>(ExampleState::eAlive);
+  Alive : exit / mAlive = false;
+  Alive --> OutOfScope : eDie
+  state Sober {
+    Sober --> Drunk : eDrinkBeer [if(stateMachine.getBac() >= 0.08)]
+    Sober --> Drunk : eDrinkWiskey [if(stateMachine.getBac() >= 0.08)]
+    Sober --> Bored : eLookAtWatch
+  }
+  state Drunk {
+  }
+  state Bored {
+  }
+}
+state OutOfScope {
+}
+@enduml

@@ -1,0 +1,26 @@
+@startuml
+state Top {
+  [*] --> Alive
+  state Alive {
+    [*] --> Sober
+    Alive : entry / TestLog::instance() << "enter_Alive " << std::endl;
+    Alive : entry / mAccumultedEntryExit += static_cast<int>(ExampleState::eAlive);
+    Alive : entry / mAlive = true;
+    Alive : exit / TestLog::instance() << "exit_Alive " << std::endl;
+    Alive : exit / mAccumultedEntryExit -= static_cast<int>(ExampleState::eAlive);
+    Alive : exit / mAlive = false;
+    Alive --> Dead : eDie
+    state Sober {
+      Sober --> Drunk : eDrinkBeer
+      Sober --> Drunk : eDrinkWiskey
+      Sober --> Bored : eLookAtWatch
+    }
+    state Drunk {
+    }
+    state Bored {
+    }
+  }
+  state Dead {
+  }
+}
+@enduml

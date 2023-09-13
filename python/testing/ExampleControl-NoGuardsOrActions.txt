@@ -1,0 +1,23 @@
+@startuml
+state Top {
+  [*] --> Alive
+  state Alive {
+    [*] --> Sober
+    Alive --> Dead : eDie
+    state Sober {
+      Sober --> Drunk : eDrinkBeer [*]
+      Sober --> Drunk : eDrinkWiskey [*]
+      Sober --> Bored : eLookAtWatch
+    }
+    state Drunk {
+    }
+    state Bored {
+    }
+  }
+  state Dead {
+  }
+}
+legend
+  [*] = guard condition omitted
+end legend
+@enduml
