@@ -6,9 +6,7 @@
 #include <iostream>
 #include <variant>
 
-namespace eta {
-namespace hsm {
-namespace detail
+namespace eta_hsm {
 
 enum class Semantics
 {
@@ -394,7 +392,7 @@ struct StateMachineTraits
     using Event = Event_;
     using StateEnum = StateEnum_;
 
-    ETA_NAMED_EVENT(StateTransition, "StateTransitionEventName", (Event, event), (StateEnum, from), (StateEnum, to));
+    // ETA_NAMED_EVENT(StateTransition, "StateTransitionEventName", (Event, utils), (StateEnum, from), (StateEnum, to));
 
     static constexpr DefaultActions kDefaultActions = kDefaultActions_;
     static constexpr bool kClearTimersOnExit = false;  // could make default once all state machines support it
@@ -410,11 +408,11 @@ public:
     /// Expose type of Event so that derived classes can see it
     using Event = typename StateMachineTraits::Event;
     using StateEnum = typename StateMachineTraits::StateEnum;
-    using StateTransition = typename StateMachineTraits::StateTransition;
+    //using StateTransition = typename StateMachineTraits::StateTransition;
     static constexpr DefaultActions kDefaultActions = StateMachineTraits::kDefaultActions;
     static constexpr bool kClearTimersOnExit = StateMachineTraits::kClearTimersOnExit;
 
-    /// Dispatch (step) state machine directly with a named event.
+    /// Dispatch (step) state machine directly with a named utils.
     virtual void dispatch(Event evt) { mState->eventHandler(*static_cast<SM*>(this), evt); }
 
     /// Kick off during action for current state
@@ -443,11 +441,10 @@ public:
 
 protected:
     /// States use this function to set the next (current) state of the state machine
-    virtual void next(const eta::hsm::TopState<StateTraits<SM, StateEnum, StateEnum::eTop>>& state) { mState = &state; }
-    const eta::hsm::TopState<StateTraits<SM, StateEnum, StateEnum::eTop>>* mState{};
+    virtual void next(const eta_hsm::TopState<StateTraits<SM, StateEnum, StateEnum::eTop>>& state) { mState = &state; }
+    const eta_hsm::TopState<StateTraits<SM, StateEnum, StateEnum::eTop>>* mState{};
 };
 
-} // namespace hsm
-} // namespace eta
+} // namespace hsm_hsm
 
-#include "eta/hsm/Hsm-inl.hpp"
+#include "Hsm-inl.hpp"
