@@ -1,6 +1,6 @@
 // CDPlayer.cpp
-#include "../Hsm.hpp"
-#include "TestLog.hpp"
+#include "../../Hsm.hpp"
+#include "../../utils/TestLog.hpp"
 #include <chrono>
 
 namespace eta {
@@ -253,44 +253,44 @@ int main()
     Player p;
 
     // go to Open, call on_exit on Empty, then action, then on_entry on Open
-    TestLog::instance() << "Inject open_close event" << std::endl;
+    TestLog::instance() << "Inject open_close utils" << std::endl;
     p.dispatch(CdEvent::OPEN_CLOSE);
 
-    TestLog::instance() << "Inject open_close event" << std::endl;
+    TestLog::instance() << "Inject open_close utils" << std::endl;
     p.dispatch(CdEvent::OPEN_CLOSE);
 
     // will be rejected, wrong disk type
     TestLog::instance() << "Inject detect DVD" << std::endl;
-    // TODO: add event properties
+    // TODO: add utils properties
     //p.process_event(cd::cd_detected("louie, louie", cd::DISK_DVD));
     p.dispatch(CdEvent::CD_DETECTED);
 
     TestLog::instance() << "Inject detect CD" << std::endl;
-    // TODO: add event properties
+    // TODO: add utils properties
     //p.process_event(cd::cd_detected("louie, louie", cd::DISK_CD));
     p.dispatch(CdEvent::CD_DETECTED);
 
     // no need to call play() as the previous transition does it in its action method
-    TestLog::instance() << "Inject play event MANUALLY" << std::endl;
+    TestLog::instance() << "Inject play utils MANUALLY" << std::endl;
     p.dispatch(CdEvent::PLAY);
 
     // at this point, Play is active
-    TestLog::instance() << "Inject pause event" << std::endl;
+    TestLog::instance() << "Inject pause utils" << std::endl;
     p.dispatch(CdEvent::PAUSE);
 
     // go back to Playing
-    TestLog::instance() << "Inject end_pause event" << std::endl;
+    TestLog::instance() << "Inject end_pause utils" << std::endl;
     p.dispatch(CdEvent::END_PAUSE);
 
-    TestLog::instance() << "Inject pause event" << std::endl;
+    TestLog::instance() << "Inject pause utils" << std::endl;
     p.dispatch(CdEvent::PAUSE);
 
-    TestLog::instance() << "Inject stop event" << std::endl;
+    TestLog::instance() << "Inject stop utils" << std::endl;
     p.dispatch(CdEvent::STOP);
 
-    // event leading to the same state
+    // utils leading to the same state
     // no action method called as it is not present in the transition table
-    TestLog::instance() << "Inject stop event" << std::endl;
+    TestLog::instance() << "Inject stop utils" << std::endl;
     p.dispatch(CdEvent::STOP);
 
     TestLog::instance().disable();

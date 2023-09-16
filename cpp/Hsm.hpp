@@ -393,7 +393,7 @@ struct StateMachineTraits
     using Event = Event_;
     using StateEnum = StateEnum_;
 
-    // ETA_NAMED_EVENT(StateTransition, "StateTransitionEventName", (Event, event), (StateEnum, from), (StateEnum, to));
+    // ETA_NAMED_EVENT(StateTransition, "StateTransitionEventName", (Event, utils), (StateEnum, from), (StateEnum, to));
 
     static constexpr DefaultActions kDefaultActions = kDefaultActions_;
     static constexpr bool kClearTimersOnExit = false;  // could make default once all state machines support it
@@ -413,7 +413,7 @@ public:
     static constexpr DefaultActions kDefaultActions = StateMachineTraits::kDefaultActions;
     static constexpr bool kClearTimersOnExit = StateMachineTraits::kClearTimersOnExit;
 
-    /// Dispatch (step) state machine directly with a named event.
+    /// Dispatch (step) state machine directly with a named utils.
     virtual void dispatch(Event evt) { mState->eventHandler(*static_cast<SM*>(this), evt); }
 
     /// Kick off during action for current state

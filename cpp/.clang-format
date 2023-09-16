@@ -1,0 +1,8 @@
+---
+# Start with defaults from the Google style, but with 4 columns indentation.
+BasedOnStyle: Google
+IndentWidth: 4
+AccessModifierOffset: -4
+ColumnLimit: 120
+AlignTrailingComments: false
+BreakBeforeBraces: Allman

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "TestLog.hpp"
+#include "../../utils/TestLog.hpp"
 
 namespace eta {
 namespace hsm {

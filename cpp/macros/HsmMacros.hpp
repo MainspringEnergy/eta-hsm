@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "eta/hsm/HsmMacrosImpl.hpp"
+#include "HsmMacrosImpl.hpp"
 
 namespace eta {
 namespace hsm {

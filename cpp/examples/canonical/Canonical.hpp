@@ -1,9 +1,8 @@
 // Canonical.hpp
 
 // CDPlayer.cpp
-//#include "eta/chrono/FakeLocalClock.hpp"
-#include "../Hsm.hpp"
-#include "TestLog.hpp"
+#include "../../Hsm.hpp"
+#include "../../utils/TestLog.hpp"
 #include <chrono>
 
 namespace eta {

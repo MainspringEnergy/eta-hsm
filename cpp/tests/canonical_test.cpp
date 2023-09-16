@@ -1,4 +1,4 @@
-#include "Canonical.hpp"
+#include "../examples/canonical/Canonical.hpp"
 
 #include <gtest/gtest.h>
 

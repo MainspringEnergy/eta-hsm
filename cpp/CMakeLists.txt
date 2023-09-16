@@ -20,10 +20,16 @@ FetchContent_Declare(googletest
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
-
+FetchContent_Declare(WiseEnum
+        GIT_REPOSITORY https://github.com/quicknir/wise_enum.git
+        GIT_TAG master
+)
+FetchContent_MakeAvailable(WiseEnum)
 
 add_library(eta_hsm_lib
     Hsm.cpp
     )
 
+add_subdirectory(examples)
 add_subdirectory(tests)
+add_subdirectory(utils)

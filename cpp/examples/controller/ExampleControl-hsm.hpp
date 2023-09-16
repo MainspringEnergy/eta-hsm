@@ -48,8 +48,8 @@ inline void example_control::Alive::handleEvent(example_control::ExampleControl&
         }
         case example_control::ExampleEvent::eDie:
         {   // Note: order of these case statements does NOT matter as the StateMachine
-            //       is only ever dispatched with a single event.
-            // In other words, event prioritization happens long before we get here.
+            //       is only ever dispatched with a single utils.
+            // In other words, utils prioritization happens long before we get here.
             TestLog::instance() << "Party over..." << std::endl;
             Transition<Current, ThisState, example_control::Dead> t(stateMachine);
             return;
@@ -74,7 +74,7 @@ inline void example_control::Sober::handleEvent(example_control::ExampleControl&
     TestLog::instance() << "Sober::handleEvent()" << std::endl;
     switch (event)
     {
-        // By choosing to handle an event in the substate, we can override the behavior
+        // By choosing to handle an utils in the substate, we can override the behavior
         // declared in the superstate (Alive)
         case example_control::ExampleEvent::eDrinkBeer:
         {
@@ -115,7 +115,7 @@ inline void example_control::Drunk::handleEvent(example_control::ExampleControl&
     TestLog::instance() << "Drunk::handleEvent()" << std::endl;
     switch (event)
     {
-        // By choosing to handle an event in the substate, we can override the behavior
+        // By choosing to handle an utils in the substate, we can override the behavior
         // declared in the superstate (Alive)
         case example_control::ExampleEvent::eLookAtWatch:
         {
