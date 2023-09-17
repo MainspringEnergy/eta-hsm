@@ -6,9 +6,10 @@
 #include "eta/logger/Logger.hpp"
 #include "eta/varz/enum.hpp"
 
-namespace eta_hsm {
-namespace utils {
-namespace tests {
+namespace eta {
+namespace event {
+namespace testing {
+namespace {
 
 ETA_DEFINE_LOGGER(logger, "event_test");
 
@@ -316,6 +317,7 @@ FEATURE("StaticTimerBank", "[utils]")
 }
 
 
-} // namespace tests
-} // namespace utils
-} // namespace eta_hsm
+} // namespace
+} // namespace testing
+} // namespace hsm
+} // namespace eta

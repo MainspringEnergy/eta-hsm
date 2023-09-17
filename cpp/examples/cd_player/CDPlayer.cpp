@@ -3,77 +3,87 @@
 #include "../../utils/TestLog.hpp"
 #include <chrono>
 
-namespace eta {
-namespace hsm {
-namespace player {
+namespace eta_hsm {
+namespace examples {
+    namespace cd_player {
 
 
-enum class CdEvent
-{
-    PLAY,
-    OPEN_CLOSE,
-    STOP,
-    CD_DETECTED,
-    PAUSE,
-    END_PAUSE
-};
+        enum class CdEvent {
+            PLAY,
+            OPEN_CLOSE,
+            STOP,
+            CD_DETECTED,
+            PAUSE,
+            END_PAUSE
+        };
 
-enum class CdState
-{
-    eTop,
-    eStopped,
-    eOpen,
-    eEmpty,
-    ePlaying,
-    ePaused,
-};
+        enum class CdState {
+            eTop,
+            eStopped,
+            eOpen,
+            eEmpty,
+            ePlaying,
+            ePaused,
+        };
 
-class Player
-{
-public:
-    using Input = EmptyType;
-    Player();
-    using Event = CdEvent;
-    static constexpr hsm::DefaultActions kDefaultActions = hsm::DefaultActions::eNothing;
+        class Player {
+        public:
+            using Input = EmptyType;
 
-    void next(const eta::hsm::TopState<StateTraits<Player, CdState, CdState::eTop>>& state) { mState = &state; }
-    void dispatch(CdEvent evt) { mState->eventHandler(*this, evt); }
+            Player();
 
-    // Dummy action functions
-    // I don't like these being public, but they have to be callable from state objects
-    void start_playback() { TestLog::instance() << "(action) start_playback" << std::endl; }
-    void open_drawer() { TestLog::instance() << "(action) open_drawer" << std::endl; }
-    void close_drawer() { TestLog::instance() << "(action) close_drawer" << std::endl; }
-    void store_cd_info() { TestLog::instance() << "(action) store_cd_info" << std::endl; }
-    void stop_playback() { TestLog::instance() << "(action) stop_playback()" << std::endl; }
-    void pause_playback() { TestLog::instance() << "(action) pause_playback" << std::endl; }
-    void resume_playback() { TestLog::instance() << "(action) resume_playback" << std::endl; }
-    void stop_and_open() { TestLog::instance() << "(action) stop_and_open" << std::endl; }
-    void stopped_again() { TestLog::instance() << "(action) stopped_again" << std::endl; }
+            using Event = CdEvent;
+            static constexpr hsm::DefaultActions kDefaultActions = hsm::DefaultActions::eNothing;
 
-private:
-    const eta::hsm::TopState<StateTraits<Player, CdState, CdState::eTop>>* mState;
-};
+            void
+            next(const eta::hsm::TopState <StateTraits<Player, CdState, CdState::eTop>> &state) { mState = &state; }
 
-template<CdState kState>
-using CdTraits = StateTraits<Player, CdState, kState>;
+            void dispatch(CdEvent evt) { mState->eventHandler(*this, evt); }
 
-using Top = eta::hsm::TopState<CdTraits<CdState::eTop>>;
-using Stopped = eta::hsm::LeafState<CdTraits<CdState::eStopped>, Top>;
-using Open = eta::hsm::LeafState<CdTraits<CdState::eOpen>, Top>;
-using Empty = eta::hsm::LeafState<CdTraits<CdState::eEmpty>, Top>;
-using Playing = eta::hsm::LeafState<CdTraits<CdState::ePlaying>, Top>;
-using Paused = eta::hsm::LeafState<CdTraits<CdState::ePaused>, Top>;
+            // Dummy action functions
+            // I don't like these being public, but they have to be callable from state objects
+            void start_playback() { TestLog::instance() << "(action) start_playback" << std::endl; }
+
+            void open_drawer() { TestLog::instance() << "(action) open_drawer" << std::endl; }
+
+            void close_drawer() { TestLog::instance() << "(action) close_drawer" << std::endl; }
+
+            void store_cd_info() { TestLog::instance() << "(action) store_cd_info" << std::endl; }
+
+            void stop_playback() { TestLog::instance() << "(action) stop_playback()" << std::endl; }
+
+            void pause_playback() { TestLog::instance() << "(action) pause_playback" << std::endl; }
+
+            void resume_playback() { TestLog::instance() << "(action) resume_playback" << std::endl; }
+
+            void stop_and_open() { TestLog::instance() << "(action) stop_and_open" << std::endl; }
+
+            void stopped_again() { TestLog::instance() << "(action) stopped_again" << std::endl; }
+
+        private:
+            const eta::hsm::TopState <StateTraits<Player, CdState, CdState::eTop>> *mState;
+        };
+
+        template<CdState kState>
+        using CdTraits = StateTraits<Player, CdState, kState>;
+
+        using Top = eta::hsm::TopState<CdTraits<CdState::eTop>>;
+        using Stopped = eta::hsm::LeafState<CdTraits<CdState::eStopped>, Top>;
+        using Open = eta::hsm::LeafState<CdTraits<CdState::eOpen>, Top>;
+        using Empty = eta::hsm::LeafState<CdTraits<CdState::eEmpty>, Top>;
+        using Playing = eta::hsm::LeafState<CdTraits<CdState::ePlaying>, Top>;
+        using Paused = eta::hsm::LeafState<CdTraits<CdState::ePaused>, Top>;
 
 // The missing constructor
-Player::Player()
-{
-    // Guessing wildly at how to initialize mState to something useful
-    eta::hsm::Transition<Top, Top, Top> t(*this);
-}
+        Player::Player() {
+            // Guessing wildly at how to initialize mState to something useful
+            eta::hsm::Transition <Top, Top, Top> t(*this);
+        }
 
-} // close player namespace because templates below must be specialized in their originally declared scope?
-using namespace player;
+} // close cd_player namespace because templates below must be specialized in their originally declared scope?
+} // namespace examples
+
+using namespace examples::cd_player;
 
 template<>template<typename Current>
 inline void Top::handleEvent(Player& player, const Current& current, Event event) const
@@ -242,7 +252,7 @@ template<> inline void player::Top::init(Player& h)
     TestLog::instance() << "(init) TopState" << std::endl;
 }
 
-} // namespace hsm
+} // namespace
 } // namespace eta
 // Close remaining hsm::eta namesapces so that linker can find main()
 using namespace eta::hsm::player;

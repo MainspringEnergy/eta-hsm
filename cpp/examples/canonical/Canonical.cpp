@@ -1,22 +1,22 @@
 // Canonical.cpp
 #include "Canonical.hpp"
 
-namespace eta {
-namespace hsm {
+namespace eta_hsm {
+namespace examples {
 namespace canonical {
 
 
 // The missing constructor
-Canonical::Canonical()
-{
+Canonical::Canonical() {
     // Guessing wildly at how to initialize mState to something useful
-    eta::hsm::Transition<Top, Top, Top> t(*this);
+    eta_hsm::Transition<Top, Top, Top> t(*this);
 }
 
 } // close canonical namespace because templates below must be specialized in their originally declared scope?
+} // examples
 
 template<>template<typename Current>
-inline void canonical::Top::handleEvent(canonical::Canonical& stateMachine, const Current& current, Event event) const
+inline void examples::canonical::Top::handleEvent(examples::canonical::Canonical& stateMachine, const Current& current, Event event) const
 {
     switch(event)
     {
@@ -29,18 +29,18 @@ inline void canonical::Top::handleEvent(canonical::Canonical& stateMachine, cons
 }
 
 template<>template<typename Current>
-inline void canonical::S0::handleEvent(canonical::Canonical& stateMachine, const Current& currentState, Event event) const
+inline void examples::canonical::S0::handleEvent(examples::canonical::Canonical& stateMachine, const Current& currentState, Event event) const
 {
     switch(event)
     {
-        case canonical::CanonicalEvent::E:
+        case examples::canonical::CanonicalEvent::E:
         {
-            Transition<Current, ThisState, canonical::S211> t(stateMachine);
+            Transition<Current, ThisState, examples::canonical::S211> t(stateMachine);
             return;
         }
-        case canonical::CanonicalEvent::E_LOCAL:
+        case examples::canonical::CanonicalEvent::E_LOCAL:
         {
-            Transition<Current, ThisState, canonical::S211, Semantics::eLocal> t(stateMachine);
+            Transition<Current, ThisState, examples::canonical::S211, Semantics::eLocal> t(stateMachine);
             return;
         }
         default:
@@ -50,58 +50,58 @@ inline void canonical::S0::handleEvent(canonical::Canonical& stateMachine, const
 }
 
 template<>template<typename Current>
-inline void canonical::S1::handleEvent(canonical::Canonical& stateMachine, const Current& currentState, Event event) const
+inline void examples::canonical::S1::handleEvent(examples::canonical::Canonical& stateMachine, const Current& currentState, Event event) const
 {
     switch(event)
     {
-        case canonical::CanonicalEvent::A:
+        case examples::canonical::CanonicalEvent::A:
         {
-            Transition<Current, ThisState, canonical::S1> t(stateMachine);
+            Transition<Current, ThisState, examples::canonical::S1> t(stateMachine);
             return;
         }
-        case canonical::CanonicalEvent::A_LOCAL:
+        case examples::canonical::CanonicalEvent::A_LOCAL:
         {
-            Transition<Current, ThisState, canonical::S1, Semantics::eLocal> t(stateMachine);
+            Transition<Current, ThisState, examples::canonical::S1, Semantics::eLocal> t(stateMachine);
             return;
         }
-        case canonical::CanonicalEvent::B:
+        case examples::canonical::CanonicalEvent::B:
         {
-            Transition<Current, ThisState, canonical::S11> t(stateMachine);
+            Transition<Current, ThisState, examples::canonical::S11> t(stateMachine);
             return;
         }
-        case canonical::CanonicalEvent::B_LOCAL:
+        case examples::canonical::CanonicalEvent::B_LOCAL:
         {
-            Transition<Current, ThisState, canonical::S11, Semantics::eLocal> t(stateMachine);
+            Transition<Current, ThisState, examples::canonical::S11, Semantics::eLocal> t(stateMachine);
             return;
         }
-        case canonical::CanonicalEvent::C:
+        case examples::canonical::CanonicalEvent::C:
         {
-            Transition<Current, ThisState, canonical::S2> t(stateMachine);
+            Transition<Current, ThisState, examples::canonical::S2> t(stateMachine);
             return;
         }
-        case canonical::CanonicalEvent::C_LOCAL:
+        case examples::canonical::CanonicalEvent::C_LOCAL:
         {
-            Transition<Current, ThisState, canonical::S2, Semantics::eLocal> t(stateMachine);
+            Transition<Current, ThisState, examples::canonical::S2, Semantics::eLocal> t(stateMachine);
             return;
         }
-        case canonical::CanonicalEvent::D:
+        case examples::canonical::CanonicalEvent::D:
         {
-            Transition<Current, ThisState, canonical::S0> t(stateMachine);
+            Transition<Current, ThisState, examples::canonical::S0> t(stateMachine);
             return;
         }
-        case canonical::CanonicalEvent::D_LOCAL:
+        case examples::canonical::CanonicalEvent::D_LOCAL:
         {
-            Transition<Current, ThisState, canonical::S0, Semantics::eLocal> t(stateMachine);
+            Transition<Current, ThisState, examples::canonical::S0, Semantics::eLocal> t(stateMachine);
             return;
         }
-        case canonical::CanonicalEvent::F:
+        case examples::canonical::CanonicalEvent::F:
         {
-            Transition<Current, ThisState, canonical::S211> t(stateMachine);
+            Transition<Current, ThisState, examples::canonical::S211> t(stateMachine);
             return;
         }
-        case canonical::CanonicalEvent::F_LOCAL:
+        case examples::canonical::CanonicalEvent::F_LOCAL:
         {
-            Transition<Current, ThisState, canonical::S211, Semantics::eLocal> t(stateMachine);
+            Transition<Current, ThisState, examples::canonical::S211, Semantics::eLocal> t(stateMachine);
             return;
         }
         default:
@@ -111,23 +111,23 @@ inline void canonical::S1::handleEvent(canonical::Canonical& stateMachine, const
 }
 
 template<>template<typename Current>
-inline void canonical::S11::handleEvent(canonical::Canonical& stateMachine, const Current& currentState, Event event) const
+inline void examples::canonical::S11::handleEvent(examples::canonical::Canonical& stateMachine, const Current& currentState, Event event) const
 {
     switch(event)
     {
-        case canonical::CanonicalEvent::G:
+        case examples::canonical::CanonicalEvent::G:
         {
-            Transition<Current, ThisState, canonical::S211> t(stateMachine);
+            Transition<Current, ThisState, examples::canonical::S211> t(stateMachine);
             return;
         }
-        case canonical::CanonicalEvent::G_LOCAL:
+        case examples::canonical::CanonicalEvent::G_LOCAL:
         {
-            Transition<Current, ThisState, canonical::S211, Semantics::eLocal> t(stateMachine);
+            Transition<Current, ThisState, examples::canonical::S211, Semantics::eLocal> t(stateMachine);
             return;
         }
-        case canonical::CanonicalEvent::Z:
+        case examples::canonical::CanonicalEvent::Z:
         {   // Not part of normal example, but used to get us into new state to test auto-transition
-            Transition<Current, ThisState, canonical::S12> t(stateMachine);
+            Transition<Current, ThisState, examples::canonical::S12> t(stateMachine);
         }
         default:
             break;
@@ -136,59 +136,28 @@ inline void canonical::S11::handleEvent(canonical::Canonical& stateMachine, cons
 }
 
 template<>template<typename Current>
-inline void canonical::S2::handleEvent(canonical::Canonical& stateMachine, const Current& currentState, Event event) const
+inline void examples::canonical::S2::handleEvent(examples::canonical::Canonical& stateMachine, const Current& currentState, Event event) const
 {
     switch(event)
     {
-        case canonical::CanonicalEvent::C:
+        case examples::canonical::CanonicalEvent::C:
         {
-            Transition<Current, ThisState, canonical::S1> t(stateMachine);
+            Transition<Current, ThisState, examples::canonical::S1> t(stateMachine);
             return;
         }
-        case canonical::CanonicalEvent::C_LOCAL:
+        case examples::canonical::CanonicalEvent::C_LOCAL:
         {
-            Transition<Current, ThisState, canonical::S1, Semantics::eLocal> t(stateMachine);
+            Transition<Current, ThisState, examples::canonical::S1, Semantics::eLocal> t(stateMachine);
             return;
         }
-        case canonical::CanonicalEvent::F:
+        case examples::canonical::CanonicalEvent::F:
         {
-            Transition<Current, ThisState, canonical::S11> t(stateMachine);
+            Transition<Current, ThisState, examples::canonical::S11> t(stateMachine);
             return;
         }
-        case canonical::CanonicalEvent::F_LOCAL:
+        case examples::canonical::CanonicalEvent::F_LOCAL:
         {
-            Transition<Current, ThisState, canonical::S11, Semantics::eLocal> t(stateMachine);
-            return;
-        }
-        default:
-            break;
-    }
-    return ParentState::handleEvent(stateMachine, currentState, event);
-}
-
-template<>template<typename Current>
-inline void canonical::S21::handleEvent(canonical::Canonical& stateMachine, const Current& currentState, Event event) const
-{
-    switch(event)
-    {
-        case canonical::CanonicalEvent::B:
-        {
-            Transition<Current, ThisState, canonical::S211> t(stateMachine);
-            return;
-        }
-        case canonical::CanonicalEvent::B_LOCAL:
-        {
-            Transition<Current, ThisState, canonical::S211, Semantics::eLocal> t(stateMachine);
-            return;
-        }
-        case canonical::CanonicalEvent::H:
-        {
-            Transition<Current, ThisState, canonical::S21> t(stateMachine);
-            return;
-        }
-        case canonical::CanonicalEvent::H_LOCAL:
-        {
-            Transition<Current, ThisState, canonical::S21, Semantics::eLocal> t(stateMachine);
+            Transition<Current, ThisState, examples::canonical::S11, Semantics::eLocal> t(stateMachine);
             return;
         }
         default:
@@ -198,38 +167,69 @@ inline void canonical::S21::handleEvent(canonical::Canonical& stateMachine, cons
 }
 
 template<>template<typename Current>
-inline void canonical::S211::handleEvent(canonical::Canonical& stateMachine, const Current& currentState, Event event) const
+inline void examples::canonical::S21::handleEvent(examples::canonical::Canonical& stateMachine, const Current& currentState, Event event) const
 {
     switch(event)
     {
-        case canonical::CanonicalEvent::B:
+        case examples::canonical::CanonicalEvent::B:
         {
-            Transition<Current, ThisState, canonical::S21> t(stateMachine);
+            Transition<Current, ThisState, examples::canonical::S211> t(stateMachine);
             return;
         }
-        case canonical::CanonicalEvent::B_LOCAL:
+        case examples::canonical::CanonicalEvent::B_LOCAL:
         {
-            Transition<Current, ThisState, canonical::S21, Semantics::eLocal> t(stateMachine);
+            Transition<Current, ThisState, examples::canonical::S211, Semantics::eLocal> t(stateMachine);
             return;
         }
-        case canonical::CanonicalEvent::D:
+        case examples::canonical::CanonicalEvent::H:
         {
-            Transition<Current, ThisState, canonical::S211> t(stateMachine);
+            Transition<Current, ThisState, examples::canonical::S21> t(stateMachine);
             return;
         }
-        case canonical::CanonicalEvent::D_LOCAL:
+        case examples::canonical::CanonicalEvent::H_LOCAL:
         {
-            Transition<Current, ThisState, canonical::S211, Semantics::eLocal> t(stateMachine);
+            Transition<Current, ThisState, examples::canonical::S21, Semantics::eLocal> t(stateMachine);
             return;
         }
-        case canonical::CanonicalEvent::G:
+        default:
+            break;
+    }
+    return ParentState::handleEvent(stateMachine, currentState, event);
+}
+
+template<>template<typename Current>
+inline void examples::canonical::S211::handleEvent(examples::canonical::Canonical& stateMachine, const Current& currentState, Event event) const
+{
+    switch(event)
+    {
+        case examples::canonical::CanonicalEvent::B:
         {
-            Transition<Current, ThisState, canonical::S0> t(stateMachine);
+            Transition<Current, ThisState, examples::canonical::S21> t(stateMachine);
             return;
         }
-        case canonical::CanonicalEvent::G_LOCAL:
+        case examples::canonical::CanonicalEvent::B_LOCAL:
         {
-            Transition<Current, ThisState, canonical::S0, Semantics::eLocal> t(stateMachine);
+            Transition<Current, ThisState, examples::canonical::S21, Semantics::eLocal> t(stateMachine);
+            return;
+        }
+        case examples::canonical::CanonicalEvent::D:
+        {
+            Transition<Current, ThisState, examples::canonical::S211> t(stateMachine);
+            return;
+        }
+        case examples::canonical::CanonicalEvent::D_LOCAL:
+        {
+            Transition<Current, ThisState, examples::canonical::S211, Semantics::eLocal> t(stateMachine);
+            return;
+        }
+        case examples::canonical::CanonicalEvent::G:
+        {
+            Transition<Current, ThisState, examples::canonical::S0> t(stateMachine);
+            return;
+        }
+        case examples::canonical::CanonicalEvent::G_LOCAL:
+        {
+            Transition<Current, ThisState, examples::canonical::S0, Semantics::eLocal> t(stateMachine);
             return;
         }
         // TODO: Guard
@@ -240,72 +240,72 @@ inline void canonical::S211::handleEvent(canonical::Canonical& stateMachine, con
 }
 
 // init actions (note the reverse ordering!)
-template<> inline void canonical::S21::init(canonical::Canonical& h)
+template<> inline void examples::canonical::S21::init(examples::canonical::Canonical& h)
 {
     // This declares which substate we default into
-    Init<canonical::S211> i(h);
-    TestLog::instance() << "init_S21 " << std::endl;
+    Init<examples::canonical::S211> i(h);
+    utils::TestLog::instance() << "init_S21 " << std::endl;
 }
 
-template<> inline void canonical::S2::init(canonical::Canonical& h)
+template<> inline void examples::canonical::S2::init(examples::canonical::Canonical& h)
 {
     // This declares which substate we default into
-    Init<canonical::S21> i(h);
-    TestLog::instance() << "init_S2 " << std::endl;
+    Init<examples::canonical::S21> i(h);
+    utils::TestLog::instance() << "init_S2 " << std::endl;
 }
 
-template<> inline void canonical::S1::init(canonical::Canonical& h)
+template<> inline void examples::canonical::S1::init(examples::canonical::Canonical& h)
 {
     // This declares which substate we default into
-    Init<canonical::S11> i(h);
-    TestLog::instance() << "init_S1 " << std::endl;
+    Init<examples::canonical::S11> i(h);
+    utils::TestLog::instance() << "init_S1 " << std::endl;
 }
 
-template<> inline void canonical::S0::init(canonical::Canonical& h)
+template<> inline void examples::canonical::S0::init(examples::canonical::Canonical& h)
 {
     // This declares which substate we default into
-    Init<canonical::S1> i(h);
-    TestLog::instance() << "init_S0 " << std::endl;
+    Init<examples::canonical::S1> i(h);
+    utils::TestLog::instance() << "init_S0 " << std::endl;
 }
 
-template<> inline void canonical::Top::init(canonical::Canonical& h)
+template<> inline void examples::canonical::Top::init(examples::canonical::Canonical& h)
 {
     // This declares which substate we default into
-    Init<canonical::S0> i(h);
-    TestLog::instance() << "init_Top " << std::endl;
+    Init<examples::canonical::S0> i(h);
+    utils::TestLog::instance() << "init_Top " << std::endl;
 }
 
 // entry actions
-template<> inline void canonical::Top::entry(canonical::Canonical&) { TestLog::instance() << "enter_Top " << std::endl; }
-template<> inline void canonical::S0::entry(canonical::Canonical&) { TestLog::instance() << "enter_S0 " << std::endl; }
-template<> inline void canonical::S1::entry(canonical::Canonical&) { TestLog::instance() << "enter_S1 " << std::endl; }
-template<> inline void canonical::S11::entry(canonical::Canonical&) { TestLog::instance() << "enter_S11 " << std::endl; }
-template<> inline void canonical::S12::entry(canonical::Canonical&) { TestLog::instance() << "enter_S12 " << std::endl; }
-template<> inline void canonical::S2::entry(canonical::Canonical&) { TestLog::instance() << "enter_S2 " << std::endl; }
-template<> inline void canonical::S21::entry(canonical::Canonical&) { TestLog::instance() << "enter_S21 " << std::endl; }
-template<> inline void canonical::S211::entry(canonical::Canonical&) { TestLog::instance() << "enter_S211 " << std::endl; }
+template<> inline void examples::canonical::Top::entry(examples::canonical::Canonical&) { utils::TestLog::instance() << "enter_Top " << std::endl; }
+template<> inline void examples::canonical::S0::entry(examples::canonical::Canonical&) { utils::TestLog::instance() << "enter_S0 " << std::endl; }
+template<> inline void examples::canonical::S1::entry(examples::canonical::Canonical&) { utils::TestLog::instance() << "enter_S1 " << std::endl; }
+template<> inline void examples::canonical::S11::entry(examples::canonical::Canonical&) { utils::TestLog::instance() << "enter_S11 " << std::endl; }
+template<> inline void examples::canonical::S12::entry(examples::canonical::Canonical&) { utils::TestLog::instance() << "enter_S12 " << std::endl; }
+template<> inline void examples::canonical::S2::entry(examples::canonical::Canonical&) { utils::TestLog::instance() << "enter_S2 " << std::endl; }
+template<> inline void examples::canonical::S21::entry(examples::canonical::Canonical&) { utils::TestLog::instance() << "enter_S21 " << std::endl; }
+template<> inline void examples::canonical::S211::entry(examples::canonical::Canonical&) { utils::TestLog::instance() << "enter_S211 " << std::endl; }
 
 // exit actions
-template<> inline void canonical::Top::exit(canonical::Canonical&) { TestLog::instance() << "exit_Top " << std::endl; }
-template<> inline void canonical::S0::exit(canonical::Canonical&) { TestLog::instance() << "exit_S0 " << std::endl; }
-template<> inline void canonical::S1::exit(canonical::Canonical&) { TestLog::instance() << "exit_S1 " << std::endl; }
-template<> inline void canonical::S11::exit(canonical::Canonical&) { TestLog::instance() << "exit_S11 " << std::endl; }
-template<> inline void canonical::S12::exit(canonical::Canonical&) { TestLog::instance() << "exit_S12 " << std::endl; }
-template<> inline void canonical::S2::exit(canonical::Canonical&) { TestLog::instance() << "exit_S2 " << std::endl; }
-template<> inline void canonical::S21::exit(canonical::Canonical&) { TestLog::instance() << "exit_S21 " << std::endl; }
-template<> inline void canonical::S211::exit(canonical::Canonical&) { TestLog::instance() << "exit_S211 " << std::endl; }
+template<> inline void examples::canonical::Top::exit(examples::canonical::Canonical&) { utils::TestLog::instance() << "exit_Top " << std::endl; }
+template<> inline void examples::canonical::S0::exit(examples::canonical::Canonical&) { utils::TestLog::instance() << "exit_S0 " << std::endl; }
+template<> inline void examples::canonical::S1::exit(examples::canonical::Canonical&) { utils::TestLog::instance() << "exit_S1 " << std::endl; }
+template<> inline void examples::canonical::S11::exit(examples::canonical::Canonical&) { utils::TestLog::instance() << "exit_S11 " << std::endl; }
+template<> inline void examples::canonical::S12::exit(examples::canonical::Canonical&) { utils::TestLog::instance() << "exit_S12 " << std::endl; }
+template<> inline void examples::canonical::S2::exit(examples::canonical::Canonical&) { utils::TestLog::instance() << "exit_S2 " << std::endl; }
+template<> inline void examples::canonical::S21::exit(examples::canonical::Canonical&) { utils::TestLog::instance() << "exit_S21 " << std::endl; }
+template<> inline void examples::canonical::S211::exit(examples::canonical::Canonical&) { utils::TestLog::instance() << "exit_S211 " << std::endl; }
 
 // during actions
-template<> inline void canonical::S11::during(canonical::Canonical&) const { TestLog::instance() << "during_S11 " << std::endl; }
-template<> inline void canonical::S211::during(canonical::Canonical&) const { TestLog::instance() << "during_S211 " << std::endl; }
+template<> inline void examples::canonical::S11::during(examples::canonical::Canonical&) const { utils::TestLog::instance() << "during_S11 " << std::endl; }
+template<> inline void examples::canonical::S211::during(examples::canonical::Canonical&) const { utils::TestLog::instance() << "during_S211 " << std::endl; }
 
 // during action to implement a guarded auto-transition
-template<> inline void canonical::S12::during(canonical::Canonical& stateMachine) const
+template<> inline void examples::canonical::S12::during(examples::canonical::Canonical& stateMachine) const
 {
-    TestLog::instance() << "during_S12 " << std::endl;
+    utils::TestLog::instance() << "during_S12 " << std::endl;
     if(true)
     {
-        Transition<ThisState, ThisState, canonical::S11> t(stateMachine);
+        Transition<ThisState, ThisState, examples::canonical::S11> t(stateMachine);
     }
     // be careful to not perform anything else here, because you
     // may no longer be in the same state!
@@ -315,5 +315,4 @@ template<> inline void canonical::S12::during(canonical::Canonical& stateMachine
     // stateMachine.during();
 }
 
-} // namespace hsm
-} // namespace eta
+} // namespace eta_hsm

@@ -7,7 +7,7 @@ class ExampleControlTest : public ::testing::Test
 protected:
     void SetUp() override {}
     void TearDown() override {}
-    eta::hsm::example_control::ExampleControl example_control_hsm_;
+    eta_hsm::examples::controller::ExampleControl example_control_hsm_;
 };
 
 

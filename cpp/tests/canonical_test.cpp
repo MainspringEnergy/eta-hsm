@@ -7,11 +7,11 @@ class CanonicalTest : public ::testing::Test
 protected:
     void SetUp() override {}
     void TearDown() override {}
-    eta::hsm::canonical::Canonical canonical_hsm_;
+    eta_hsm::examples::canonical::Canonical canonical_hsm_;
 };
 
 
 TEST_F(CanonicalTest, InitialConditionsTest)
 {
-    EXPECT_EQ(canonical_hsm_.identify(), eta::hsm::canonical::CanonicalState::eS11);
+    EXPECT_EQ(canonical_hsm_.identify(), eta_hsm::examples::canonical::CanonicalState::eS11);
 }

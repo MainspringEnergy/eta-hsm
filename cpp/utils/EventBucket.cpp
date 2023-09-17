@@ -2,8 +2,8 @@
 
 #include "EventBucket.hpp"
 
-namespace eta {
-namespace event {
+namespace eta_hsm {
+namespace utils {
 
 } // namespace utils
-} // namespace eta
+} // namespace eta_hsm

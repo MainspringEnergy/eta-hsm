@@ -6,8 +6,7 @@
 #include <iostream>
 #include <variant>
 
-namespace eta {
-namespace hsm {
+namespace eta_hsm {
 
 enum class Semantics
 {
@@ -442,11 +441,10 @@ public:
 
 protected:
     /// States use this function to set the next (current) state of the state machine
-    virtual void next(const eta::hsm::TopState<StateTraits<SM, StateEnum, StateEnum::eTop>>& state) { mState = &state; }
-    const eta::hsm::TopState<StateTraits<SM, StateEnum, StateEnum::eTop>>* mState{};
+    virtual void next(const eta_hsm::TopState<StateTraits<SM, StateEnum, StateEnum::eTop>>& state) { mState = &state; }
+    const eta_hsm::TopState<StateTraits<SM, StateEnum, StateEnum::eTop>>* mState{};
 };
 
-} // namespace hsm
-} // namespace eta
+} // namespace hsm_hsm
 
 #include "Hsm-inl.hpp"

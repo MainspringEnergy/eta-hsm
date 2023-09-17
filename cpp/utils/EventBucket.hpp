@@ -8,7 +8,7 @@
 #include <type_traits>
 #include <vector>
 
-namespace eta {
+namespace eta_hsm {
 namespace event {
 
 /// A bucket for carrying events around with a very simple interface
@@ -139,4 +139,4 @@ private:
 };
 
 } // namespace utils
-} // namespace eta
+} // namespace eta_hsm

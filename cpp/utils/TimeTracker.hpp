@@ -5,8 +5,8 @@
 #include <array>
 #include <chrono>
 
-namespace eta {
-namespace time_tracker {
+namespace eta_hsm {
+namespace utils {
 
 /// A utility to keep track of how long we have been in each (potentially nested) state.
 template<typename StateEnum, typename LocalClock>
@@ -65,5 +65,5 @@ private:
 
 };
 
-} // namespace time_tracker
-} // namespace eta
+} // namespace utils
+} // namespace eta_hsm

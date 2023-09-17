@@ -6,8 +6,8 @@
 #include <chrono>
 #include <set>
 
-namespace eta {
-namespace event {
+namespace eta_hsm {
+namespace utils {
 
 /// Provide a default unique enum type so that users only have to provide their own if they want
 /// to utilize the additional functionality of being able to schedule multiple timers from the same
@@ -328,4 +328,4 @@ private:
 
 
 } // namespace utils
-} // namespace eta
+} // namespace eta_hsm

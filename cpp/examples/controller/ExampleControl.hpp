@@ -8,9 +8,9 @@
 #include <memory>
 #include <queue>
 
-namespace eta {
-namespace hsm {
-namespace example_control {
+namespace eta_hsm {
+namespace examples {
+namespace controller {
 
 /// Top-level controller for APU control process
 
@@ -142,9 +142,9 @@ using Drunk = eta::hsm::LeafState<ExampleTraits<ExampleState::eDrunk>, Alive>;
 using Bored = eta::hsm::LeafState<ExampleTraits<ExampleState::eBored>, Alive>;
 using Dead = eta::hsm::LeafState<ExampleTraits<ExampleState::eDead>, Top>;
 
-} // namespace example_control
-} // namespace hsm
-} // namespace eta
+} // namespace controller
+} // namespace examples
+} // namespace eta_hsm
 
 #include "ExampleControl-inl.hpp"
 #include "ExampleControl-hsm.hpp"

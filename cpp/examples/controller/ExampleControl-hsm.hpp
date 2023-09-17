@@ -5,8 +5,7 @@
 // *********************** Begin State Machine Defintion in eta::hsm namespace ******************
 // Like it or not, C++ requires us to specialize functions in the same namespce that they are declared in
 // The only thing that we should be adding below are eventHandler() and during() for each state.
-namespace eta {
-namespace hsm {
+namespace eta_hsm {
 
 // Do NOT open up eta::example_control namespace in the header
 
@@ -157,5 +156,4 @@ template<> inline void example_control::Top::init(example_control::ExampleContro
 // We still have the option of specializing some of them by specific state here if we want to.
 // template<> inline void Dead::during(ExampleControl& stateMachine) const { stateMachine.doSomethingDifferent(); }
 
-} // namespace hsm
-} // namespace eta
+} // namespace eta_hsm

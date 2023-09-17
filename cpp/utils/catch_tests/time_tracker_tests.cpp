@@ -13,9 +13,9 @@
 #define CSV_IO_NO_THREAD
 #include <csv/csv.h>
 
-namespace eta_hsm {
-namespace utils {
-namespace tests {
+namespace eta {
+namespace time_tracker {
+namespace {
 
 const char kDelim {','};
 
@@ -82,6 +82,6 @@ FEATURE("TimeTracker", "[time_tracker]")
 }
 
 
-} // namespace tests
-} // namespace utils
-} // namespace eta_hsm
+} // namespace
+} // namespace time_tracker
+} // namespace eta

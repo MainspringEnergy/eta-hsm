@@ -4,9 +4,9 @@
 
 #include "../../utils/TestLog.hpp"
 
-namespace eta {
-namespace hsm {
-namespace example_control {
+namespace eta_hsm {
+namespace examples {
+namespace controller {
 
 ExampleControl::ExampleControl()
     //: StateMachine("ExampleControl")
@@ -62,6 +62,6 @@ void ExampleControl::increaseBac(Real amt)
 
 
 
-} // namespace example_control
-} // namespace hsm
-} // namespace eta
+} // namespace controller
+} // namespace examples
+} // namespace eta_hsm

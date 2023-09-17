@@ -2,10 +2,10 @@
 
 #include "Timer.hpp"
 
-namespace eta {
-namespace hsm {
+namespace eta_hsm {
+namespace utils {
 
 
 
-} // namespace hsm
-} // namespace eta
+} // namespace utils
+} // namespace eta_hsm
