@@ -11,7 +11,7 @@ template<>
 inline void ExampleControl::stateUpdate<ExampleState::eSober>()
 {
     // Can use mpInput-> here to access inputs
-    TestLog::instance() << "stateUpdate<eSober> " << std::endl;
+    utils::TestLog::instance() << "stateUpdate<eSober> " << std::endl;
 
     // Possibly check for fault-like situations
     if(getBac() > 0.35)
@@ -26,7 +26,7 @@ template<>
 inline void ExampleControl::stateUpdate<ExampleState::eDrunk>()
 {
     // Can use mpInput-> here to access inputs
-    TestLog::instance() << "stateUpdate<eDrunk> " << std::endl;
+    utils::TestLog::instance() << "stateUpdate<eDrunk> " << std::endl;
 
     // Possibly check for fault-like situations
     if(getBac() > 0.35)
@@ -40,14 +40,14 @@ inline void ExampleControl::stateUpdate<ExampleState::eDrunk>()
 template<>
 inline void ExampleControl::stateUpdate<ExampleState::eDead>()
 {
-    TestLog::instance() << "stateUpdate<eDead> " << std::endl;
+    utils::TestLog::instance() << "stateUpdate<eDead> " << std::endl;
     // do nothing...
 }
 
 template<>
 inline void ExampleControl::stateUpdate<ExampleState::eBored>()
 {
-    TestLog::instance() << "stateUpdate<eBored> " << std::endl;
+    utils::TestLog::instance() << "stateUpdate<eBored> " << std::endl;
     // do nothing...
 }
 
@@ -56,7 +56,7 @@ inline void ExampleControl::entry<ExampleState::eAlive>()
 {
     // Yes, we can also now test alive-ness by querying state, but I'm keeping this around as an example
     // of how to manipulate controller-continuous-state with state-specialized entry/exit functions.
-    TestLog::instance() << "enter_Alive " << std::endl;
+    utils::TestLog::instance() << "enter_Alive " << std::endl;
     mAccumultedEntryExit += static_cast<int>(ExampleState::eAlive);
     mAlive = true;
 }
@@ -64,7 +64,7 @@ inline void ExampleControl::entry<ExampleState::eAlive>()
 template<>
 inline void ExampleControl::exit<ExampleState::eAlive>()
 {
-    TestLog::instance() << "exit_Alive " << std::endl;
+    utils::TestLog::instance() << "exit_Alive " << std::endl;
     mAccumultedEntryExit -= static_cast<int>(ExampleState::eAlive);
     mAlive = false;
 }

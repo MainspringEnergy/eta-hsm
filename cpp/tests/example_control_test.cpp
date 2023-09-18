@@ -13,5 +13,5 @@ protected:
 
 TEST_F(ExampleControlTest, InitialConditionsTest)
 {
-    EXPECT_EQ(example_control_hsm_.identify(), eta::hsm::example_control::ExampleState::eSober);
+    EXPECT_EQ(example_control_hsm_.identify(), eta_hsm::examples::controller::ExampleState::eSober);
 }

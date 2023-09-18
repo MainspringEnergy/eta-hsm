@@ -15,7 +15,7 @@ ExampleControl::ExampleControl()
     // In order to make sure we hit all of the correct entry methods
     // (and avoid duplicating initial/default states) the easist way
     // to do this is to kick off a self-transition from Top to Top.
-    eta::hsm::Transition<Top, Top, Top> t(*this);
+    eta_hsm::Transition<Top, Top, Top> t(*this);
 }
 
 ExampleControl::~ExampleControl()
@@ -23,7 +23,7 @@ ExampleControl::~ExampleControl()
 }
 
 /// geneirc top-level update
-void ExampleControl::update(const example_control::Input& input)
+void ExampleControl::update(const examples::controller::Input& input)
 {
     // Save a copy of input reference to avoid having to pass it around to the states
     mpInput = &input;
@@ -57,7 +57,7 @@ void ExampleControl::increaseBac(Real amt)
     {
         mBac = 0.0;
     }
-    TestLog::instance() << "BAC = " << mBac << std::endl;
+    utils::TestLog::instance() << "BAC = " << mBac << std::endl;
 }
 
 

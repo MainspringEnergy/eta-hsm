@@ -49,12 +49,12 @@ struct ExampleControlTraits
 
 //    ETA_NAMED_EVENT(StateTransition, "StateTransitionEventName", (Event, utils), (StateEnum, from), (StateEnum, to));
 
-    static constexpr DefaultActions kDefaultActions = hsm::DefaultActions::eControlUpdate;
+    static constexpr DefaultActions kDefaultActions = eta_hsm::DefaultActions::eControlUpdate;
     static constexpr bool kClearTimersOnExit = true;
 };
 
 /// With eta::hsm, the top-level controller can BE the state machine
-class ExampleControl : public hsm::StateMachine<ExampleControl, ExampleControlTraits>
+class ExampleControl : public eta_hsm::StateMachine<ExampleControl, ExampleControlTraits>
 {
 public:
     using Input = EmptyType; // rely on empty during() as an example of legacy control
@@ -62,12 +62,12 @@ public:
     ExampleControl();
     virtual ~ExampleControl();
 
-    using Parent = hsm::StateMachine<ExampleControl, ExampleControlTraits>;
+    using Parent = eta_hsm::StateMachine<ExampleControl, ExampleControlTraits>;
 
     friend class TopState<ExampleControl>;
 
     using Clock = std::chrono::system_clock;
-    using EventScheduler = event::TimerBank<event::TimerTraits<Clock, Event, StateEnum>>;
+    using EventScheduler = eta_hsm::utils::TimerBank<eta_hsm::utils::TimerTraits<Clock, Event, StateEnum>>;
 
     /// Get a reference to the "limited" EventBucket interface for collecting events
     event::EventBucket<Event>& eventBucket() { return mEventBucket; }
@@ -75,7 +75,7 @@ public:
     EventScheduler& eventScheduler() { return mEventScheduler; }
 
     /// geneirc top-level update
-    void update(const example_control::Input& input);
+    void update(const controller::Input& input);
 
     /// Templatized state-specific update functions
     template<ExampleState state>
@@ -120,7 +120,7 @@ private:
 
     // This is non-standard for Update API, but we may need to hold a reference to the input
     // in order to avoid passing it around through all of the states.
-    const example_control::Input* mpInput {};
+    const controller::Input* mpInput {};
 
     // Additional stateful data
     Real mBac {0.0};
@@ -135,12 +135,12 @@ template<ExampleState kState>
 using ExampleTraits = StateTraits<ExampleControl, ExampleState, kState>;
 
 /// Declare the states that exist in this example Hsm (and their relationships) here
-using Top = eta::hsm::TopState<ExampleTraits<ExampleState::eTop>>;
-using Alive = eta::hsm::CompState<ExampleTraits<ExampleState::eAlive>, Top>;
-using Sober = eta::hsm::LeafState<ExampleTraits<ExampleState::eSober>, Alive>;
-using Drunk = eta::hsm::LeafState<ExampleTraits<ExampleState::eDrunk>, Alive>;
-using Bored = eta::hsm::LeafState<ExampleTraits<ExampleState::eBored>, Alive>;
-using Dead = eta::hsm::LeafState<ExampleTraits<ExampleState::eDead>, Top>;
+using Top = eta_hsm::TopState<ExampleTraits<ExampleState::eTop>>;
+using Alive = eta_hsm::CompState<ExampleTraits<ExampleState::eAlive>, Top>;
+using Sober = eta_hsm::LeafState<ExampleTraits<ExampleState::eSober>, Alive>;
+using Drunk = eta_hsm::LeafState<ExampleTraits<ExampleState::eDrunk>, Alive>;
+using Bored = eta_hsm::LeafState<ExampleTraits<ExampleState::eBored>, Alive>;
+using Dead = eta_hsm::LeafState<ExampleTraits<ExampleState::eDead>, Top>;
 
 } // namespace controller
 } // namespace examples
