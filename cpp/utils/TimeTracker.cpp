@@ -1,3 +1,3 @@
-// eta/time_tracker/TimeTracker.cpp
+// TimeTracker.cpp
 
-#include "eta/time_tracker/TimeTracker.hpp"
+#include "TimeTracker.hpp"

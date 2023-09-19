@@ -1,6 +1,7 @@
 // eta/time_tracker/TimeTracker.hpp
 
 #pragma once
+#include "wise_enum/wise_enum.h"
 
 #include <array>
 #include <chrono>

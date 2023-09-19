@@ -9,7 +9,7 @@
 #include <vector>
 
 namespace eta_hsm {
-namespace event {
+namespace utils {
 
 /// A bucket for carrying events around with a very simple interface
 template<typename Event>

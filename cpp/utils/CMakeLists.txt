@@ -1,8 +1,8 @@
 
-add_library(event_lib
-    EventBucket.cpp
-    Timer.cpp
-    TimeTracker.cpp
-    )
+add_library(utils_lib
+        EventBucket.cpp
+        Timer.cpp
+        TimeTracker.cpp
+)
 
-# add_subdirectory(tests)
+add_subdirectory(tests)

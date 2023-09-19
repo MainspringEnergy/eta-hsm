@@ -1,14 +1,25 @@
-# eta/hsm/tests/CMakeLists.txt
-# event_tests is a Catch2 test suite
+enable_testing()
 
-eta_test(event
-    SOURCE
-    event_bucket_test.cpp
-    timer_test.cpp
-    criteria_checks_tests.cpp
+add_executable(event_bucket_test
+        event_bucket_test.cpp
+)
+target_link_libraries(event_bucket_test
+        GTest::gtest_main
+)
 
-    DEPENDS
-    event_lib
-    Catch
-    logger_lib
-    )
+add_executable(time_tracker_test
+        time_tracker_test.cpp
+)
+target_link_libraries(time_tracker_test
+        GTest::gtest_main
+)
+
+#add_executable(timer_test
+#        timer_test.cpp
+#)
+#target_link_libraries(timer_test
+#        GTest::gtest_main
+#)
+
+include(GoogleTest)
+gtest_discover_tests(event_bucket_test time_tracker_test)

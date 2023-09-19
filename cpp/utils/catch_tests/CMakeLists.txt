@@ -8,7 +8,7 @@ eta_test(event
     criteria_checks_tests.cpp
 
     DEPENDS
-    event_lib
+    utils_lib
     Catch
     logger_lib
     )
