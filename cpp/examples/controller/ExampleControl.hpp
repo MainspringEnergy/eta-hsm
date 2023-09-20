@@ -70,7 +70,7 @@ public:
     using EventScheduler = eta_hsm::utils::TimerBank<eta_hsm::utils::TimerTraits<Clock, Event, StateEnum>>;
 
     /// Get a reference to the "limited" EventBucket interface for collecting events
-    event::EventBucket<Event>& eventBucket() { return mEventBucket; }
+    utils::EventBucket<Event>& eventBucket() { return mEventBucket; }
     /// Get a reference to the EventScheduler interface for scheduling events
     EventScheduler& eventScheduler() { return mEventScheduler; }
 
@@ -113,7 +113,7 @@ public:
 
 private:
     /// A place to hold events.  Derived StateMachines can choose what type of bucket to use.
-    event::PrioritizedEventBucket<Event> mEventBucket {};
+    utils::PrioritizedEventBucket<Event> mEventBucket {};
 
     /// Hold potentially several timers that will set off events when they expire
     EventScheduler mEventScheduler {};

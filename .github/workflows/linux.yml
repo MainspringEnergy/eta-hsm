@@ -1,0 +1,44 @@
+name: Linux_CI
+
+on: [push]
+
+jobs:
+  python_linting:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install flake8 pep8-naming pytest
+      - name: Lint with flake8
+        run: |
+          flake8 python --count --max-complexity=15 --max-line-length=127 --statistics
+
+  cpp_linting:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run clang-format style check for C++ files
+        uses: jidicula/clang-format-action@v4.11.0
+        with:
+          clang-format-version: '15'
+          check-path: 'cpp'
+          exclude-regex: '''
+
+  unit_tests:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 30
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build
+        working-directory: cpp
+        run: |
+          cmake
+          make
+      - name: Run cpp unit tests
+        working-directory: cpp
+        run: ctest --output-on-failure
