@@ -5,4 +5,8 @@ add_library(utils_lib
         TimeTracker.cpp
 )
 
+target_link_libraries(utils_lib
+        wise_enum
+)
+
 add_subdirectory(tests)

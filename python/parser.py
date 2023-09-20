@@ -738,7 +738,7 @@ class StateMachine:
                     transition_string += " / {}".format(transition.action)
                 else:
                     # explicitly show that a transition action has been omitted
-                    transition_string += " /*".format(transition.action)
+                    transition_string += " /*"
                     self._add_legend_entry("/* = transition action omitted")
 
             fid.write(internal_indent + transition_string + "\n")

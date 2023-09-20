@@ -68,7 +68,7 @@ public:
     using EventScheduler = eta_hsm::utils::TimerBank<eta_hsm::utils::TimerTraits<Clock, Event, StateEnum>>;
 
     /// Get a reference to the "limited" EventBucket interface for collecting events
-    event::EventBucket<Event>& eventBucket() { return mEventBucket; }
+    utils::EventBucket<Event>& eventBucket() { return mEventBucket; }
     /// Get a reference to the EventScheduler interface for scheduling events
     EventScheduler& eventScheduler() { return mEventScheduler; }
 
