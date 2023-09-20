@@ -14,12 +14,12 @@ target_link_libraries(time_tracker_test
         GTest::gtest_main
 )
 
-#add_executable(timer_test
-#        timer_test.cpp
-#)
-#target_link_libraries(timer_test
-#        GTest::gtest_main
-#)
+add_executable(timer_test
+        timer_test.cpp
+)
+target_link_libraries(timer_test
+        GTest::gtest_main
+)
 
 include(GoogleTest)
-gtest_discover_tests(event_bucket_test time_tracker_test)
+gtest_discover_tests(event_bucket_test time_tracker_test timer_test)

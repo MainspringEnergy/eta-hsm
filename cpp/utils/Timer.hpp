@@ -11,7 +11,7 @@ namespace utils {
 
 /// Provide a default unique enum type so that users only have to provide their own if they want
 /// to utilize the additional functionality of being able to schedule multiple timers from the same
-/// state with the same utils.
+/// state with the same events.
 enum class DefaultUniqueEnum
 {
     eNone
@@ -105,7 +105,7 @@ private:
     bool mArmed;
 };
 
-/// The controller (which is an hsm::StateMachine) will have to hold potentially several timers running simultaneously,
+/// The controller (which is an eta-hsm::StateMachine) will have to hold potentially several timers running simultaneously,
 /// and I was unsure which STL container (if any) would end up working best for indexing by state and utils,
 /// much less one that would be appropriate for the RPU from a memory allocation standpoint.
 /// Hence, I'm going to declare our own custom container, and we can
@@ -189,8 +189,8 @@ public:
         }
     }
 
-    /// check timers and add all fired events to the utils bucket
-    void checkTimers(std::chrono::time_point<Clock> now, event::EventBucket<Event>& eventBucket)
+    /// check timers and add all fired events to the event bucket
+    void checkTimers(std::chrono::time_point<Clock> now, utils::EventBucket<Event>& eventBucket)
     {
         // To avoid interacting with clocks, we will hold the last time value that we have seen.
         mLastTimeValue = now;
@@ -300,7 +300,7 @@ public:
     }
 
     /// check timers and add all fired events to the utils bucket
-    void checkTimers(std::chrono::time_point<Clock> now, event::EventBucket<Event>& eventBucket)
+    void checkTimers(std::chrono::time_point<Clock> now, EventBucket<Event>& eventBucket)
     {
         // To avoid interacting with clocks, we will hold the last time value that we have seen.
         mLastTimeValue = now;
