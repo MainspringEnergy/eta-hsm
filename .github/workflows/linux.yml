@@ -34,11 +34,14 @@ jobs:
         shell: bash
     steps:
       - uses: actions/checkout@v3
-      - name: Build
+      - name: CMake
         working-directory: cpp
         run: |
-          cmake .
-          make
+          mkdir build
+          cmake -S cpp -B build
+      - name: Build
+        working-directory: build
+        run: make
       - name: Run cpp unit tests
-        working-directory: cpp
+        working-directory: build
         run: ctest --output-on-failure
