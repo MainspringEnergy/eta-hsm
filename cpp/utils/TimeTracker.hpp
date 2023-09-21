@@ -1,22 +1,19 @@
 // eta/time_tracker/TimeTracker.hpp
 
 #pragma once
-#include "wise_enum/wise_enum.h"
-
 #include <array>
 #include <chrono>
+
+#include "wise_enum/wise_enum.h"
 
 namespace eta_hsm {
 namespace utils {
 
 /// A utility to keep track of how long we have been in each (potentially nested) state.
-template<typename StateEnum, typename LocalClock>
-class TimeTracker
-{
+template <typename StateEnum, typename LocalClock>
+class TimeTracker {
 public:
-    TimeTracker(const LocalClock& clock)
-        : mClock{clock}
-    {}
+    TimeTracker(const LocalClock& clock) : mClock{clock} {}
 
     /// We will return durations with whatever precision the provided clock uses
     using Duration = std::chrono::duration<typename LocalClock::rep, typename LocalClock::period>;
@@ -30,10 +27,7 @@ public:
 
     /// Record that we have exited each state so that we can avoid returning incorrect durations
     /// for states that we are no longer in
-    void exit(StateEnum state)
-    {
-        mInState.at(static_cast<Underlying>(state)) = false;
-    }
+    void exit(StateEnum state) { mInState.at(static_cast<Underlying>(state)) = false; }
 
     /// Query how long we have been in any particular state
     /// If we are not currently in that state, return 0
@@ -47,8 +41,6 @@ public:
     }
 
 protected:
-
-
 private:
     const LocalClock& mClock;
 
@@ -63,8 +55,7 @@ private:
     /// We could probably encode this information with some sort of intentionally invalid mEntryTime,
     /// but that seemed more difficult to understand and potentially more error prone.
     std::array<bool, wise_enum::size<StateEnum>> mInState{false};
-
 };
 
-} // namespace utils
-} // namespace eta_hsm
+}  // namespace utils
+}  // namespace eta_hsm

@@ -1,20 +1,14 @@
 // CDPlayer.cpp
+#include <chrono>
+
 #include "../../Hsm.hpp"
 #include "../../utils/TestLog.hpp"
-#include <chrono>
 
 namespace eta_hsm {
 namespace examples {
 namespace cd_player {
 
-enum class CdEvent {
-    PLAY,
-    OPEN_CLOSE,
-    STOP,
-    CD_DETECTED,
-    PAUSE,
-    END_PAUSE
-};
+enum class CdEvent { PLAY, OPEN_CLOSE, STOP, CD_DETECTED, PAUSE, END_PAUSE };
 
 enum class CdState {
     eTop,
@@ -34,8 +28,7 @@ public:
     using Event = CdEvent;
     static constexpr eta_hsm::DefaultActions kDefaultActions = eta_hsm::DefaultActions::eNothing;
 
-    void
-    next(const eta_hsm::TopState <StateTraits<Player, CdState, CdState::eTop>> &state) { mState = &state; }
+    void next(const eta_hsm::TopState<StateTraits<Player, CdState, CdState::eTop>>& state) { mState = &state; }
 
     void dispatch(CdEvent evt) { mState->eventHandler(*this, evt); }
 
@@ -60,10 +53,10 @@ public:
     void stopped_again() { utils::TestLog::instance() << "(action) stopped_again" << std::endl; }
 
 private:
-    const eta_hsm::TopState <StateTraits<Player, CdState, CdState::eTop>> *mState;
+    const eta_hsm::TopState<StateTraits<Player, CdState, CdState::eTop>>* mState;
 };
 
-template<CdState kState>
+template <CdState kState>
 using CdTraits = StateTraits<Player, CdState, kState>;
 
 using Top = eta_hsm::TopState<CdTraits<CdState::eTop>>;
@@ -74,33 +67,36 @@ using Playing = eta_hsm::LeafState<CdTraits<CdState::ePlaying>, Top>;
 using Paused = eta_hsm::LeafState<CdTraits<CdState::ePaused>, Top>;
 
 // The missing constructor
-Player::Player() {
+Player::Player()
+{
     // Guessing wildly at how to initialize mState to something useful
-    eta_hsm::Transition <Top, Top, Top> t(*this);
+    eta_hsm::Transition<Top, Top, Top> t(*this);
 }
 
-} // close cd_player namespace because templates below must be specialized in their originally declared scope?
-} // namespace examples
+}  // namespace cd_player
+}  // namespace examples
 
 using namespace examples::cd_player;
 
-template<>template<typename Current>
+template <>
+template <typename Current>
 inline void Top::handleEvent(Player& player, const Current& current, Event event) const
 {
-    switch(event)
+    switch (event)
     {
         // We can handle events here if we want them to have default
         // behaviors that can then be overridden in specific states.
         default:
             break;
     }
-    return; // TopState has no parent
+    return;  // TopState has no parent
 }
 
-template<>template<typename Current>
+template <>
+template <typename Current>
 inline void Stopped::handleEvent(Player& player, const Current& current, Event event) const
 {
-    switch(event)
+    switch (event)
     {
         case CdEvent::PLAY:
         {
@@ -127,10 +123,11 @@ inline void Stopped::handleEvent(Player& player, const Current& current, Event e
     return ParentState::handleEvent(player, current, event);
 }
 
-template<>template<typename Current>
+template <>
+template <typename Current>
 inline void Open::handleEvent(Player& player, const Current& current, Event event) const
 {
-    switch(event)
+    switch (event)
     {
         case CdEvent::OPEN_CLOSE:
         {
@@ -144,10 +141,11 @@ inline void Open::handleEvent(Player& player, const Current& current, Event even
     return ParentState::handleEvent(player, current, event);
 }
 
-template<>template<typename Current>
+template <>
+template <typename Current>
 inline void Empty::handleEvent(Player& player, const Current& current, Event event) const
 {
-    switch(event)
+    switch (event)
     {
         case CdEvent::CD_DETECTED:
         {
@@ -168,10 +166,11 @@ inline void Empty::handleEvent(Player& player, const Current& current, Event eve
     return ParentState::handleEvent(player, current, event);
 }
 
-template<>template<typename Current>
+template <>
+template <typename Current>
 inline void Playing::handleEvent(Player& player, const Current& current, Event event) const
 {
-    switch(event)
+    switch (event)
     {
         case CdEvent::STOP:
         {
@@ -194,13 +193,14 @@ inline void Playing::handleEvent(Player& player, const Current& current, Event e
         default:
             break;
     }
-    return ParentState::handleEvent(player,current, event);
+    return ParentState::handleEvent(player, current, event);
 }
 
-template<>template<typename Current>
+template <>
+template <typename Current>
 inline void Paused::handleEvent(Player& player, const Current& current, Event event) const
 {
-    switch(event)
+    switch (event)
     {
         case CdEvent::STOP:
         {
@@ -227,23 +227,72 @@ inline void Paused::handleEvent(Player& player, const Current& current, Event ev
 }
 
 // entry actions
-template<> inline void Top::entry(Player&) { utils::TestLog::instance() << "(enter) TopState" << std::endl; }
-template<> inline void Stopped::entry(Player&) { utils::TestLog::instance() << "(enter) Stopped" << std::endl; }
-template<> inline void Open::entry(Player&) { utils::TestLog::instance() << "(enter) Open" << std::endl; }
-template<> inline void Empty::entry(Player&) { utils::TestLog::instance() << "(enter) Empty" << std::endl; }
-template<> inline void Playing::entry(Player&) { utils::TestLog::instance() << "(enter) Playing" << std::endl; }
-template<> inline void Paused::entry(Player&) { utils::TestLog::instance() << "(enter) Entry" << std::endl; }
+template <>
+inline void Top::entry(Player&)
+{
+    utils::TestLog::instance() << "(enter) TopState" << std::endl;
+}
+template <>
+inline void Stopped::entry(Player&)
+{
+    utils::TestLog::instance() << "(enter) Stopped" << std::endl;
+}
+template <>
+inline void Open::entry(Player&)
+{
+    utils::TestLog::instance() << "(enter) Open" << std::endl;
+}
+template <>
+inline void Empty::entry(Player&)
+{
+    utils::TestLog::instance() << "(enter) Empty" << std::endl;
+}
+template <>
+inline void Playing::entry(Player&)
+{
+    utils::TestLog::instance() << "(enter) Playing" << std::endl;
+}
+template <>
+inline void Paused::entry(Player&)
+{
+    utils::TestLog::instance() << "(enter) Entry" << std::endl;
+}
 
 // exit actions
-template<> inline void Top::exit(Player&) { utils::TestLog::instance() << "(exit) TopState" << std::endl; }
-template<> inline void Stopped::exit(Player&) { utils::TestLog::instance() << "(exit) Stopped" << std::endl; }
-template<> inline void Open::exit(Player&) { utils::TestLog::instance() << "(exit) Open" << std::endl; }
-template<> inline void Empty::exit(Player&) { utils::TestLog::instance() << "(exit) Empty" << std::endl; }
-template<> inline void Playing::exit(Player&) { utils::TestLog::instance() << "(exit) Playing" << std::endl; }
-template<> inline void Paused::exit(Player&) { utils::TestLog::instance() << "(exit) Entry" << std::endl; }
+template <>
+inline void Top::exit(Player&)
+{
+    utils::TestLog::instance() << "(exit) TopState" << std::endl;
+}
+template <>
+inline void Stopped::exit(Player&)
+{
+    utils::TestLog::instance() << "(exit) Stopped" << std::endl;
+}
+template <>
+inline void Open::exit(Player&)
+{
+    utils::TestLog::instance() << "(exit) Open" << std::endl;
+}
+template <>
+inline void Empty::exit(Player&)
+{
+    utils::TestLog::instance() << "(exit) Empty" << std::endl;
+}
+template <>
+inline void Playing::exit(Player&)
+{
+    utils::TestLog::instance() << "(exit) Playing" << std::endl;
+}
+template <>
+inline void Paused::exit(Player&)
+{
+    utils::TestLog::instance() << "(exit) Entry" << std::endl;
+}
 
 // init actions (note the reverse ordering!)
-template<> inline void examples::cd_player::Top::init(Player& h)
+template <>
+inline void examples::cd_player::Top::init(Player& h)
 {
     // This declares which substate we default into
     Init<Stopped> i(h);
@@ -251,7 +300,7 @@ template<> inline void examples::cd_player::Top::init(Player& h)
     utils::TestLog::instance() << "(init) TopState" << std::endl;
 }
 
-} // namespace eta_hsm
+}  // namespace eta_hsm
 // Close remaining hsm::eta namesapces so that linker can find main()
 using namespace eta_hsm::examples::cd_player;
 using namespace eta_hsm::utils;
@@ -271,12 +320,12 @@ int main()
     // will be rejected, wrong disk type
     TestLog::instance() << "Inject detect DVD" << std::endl;
     // TODO: add utils properties
-    //p.process_event(cd::cd_detected("louie, louie", cd::DISK_DVD));
+    // p.process_event(cd::cd_detected("louie, louie", cd::DISK_DVD));
     p.dispatch(CdEvent::CD_DETECTED);
 
     TestLog::instance() << "Inject detect CD" << std::endl;
     // TODO: add utils properties
-    //p.process_event(cd::cd_detected("louie, louie", cd::DISK_CD));
+    // p.process_event(cd::cd_detected("louie, louie", cd::DISK_CD));
     p.dispatch(CdEvent::CD_DETECTED);
 
     // no need to call play() as the previous transition does it in its action method
@@ -306,7 +355,7 @@ int main()
 
     auto start_time = std::chrono::high_resolution_clock::now();
     auto N = 1E6;
-    for(auto idx = 0; idx < N; idx++)
+    for (auto idx = 0; idx < N; idx++)
     {
         p.dispatch(CdEvent::PLAY);
         p.dispatch(CdEvent::STOP);
@@ -316,5 +365,6 @@ int main()
     TestLog::instance().enable();
     TestLog::instance() << N << " play/stop cycles in " << duration.count() << " microseconds" << std::endl;
 
-    return 0;;
-} // main()
+    return 0;
+    ;
+}  // main()

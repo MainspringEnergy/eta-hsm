@@ -9,9 +9,10 @@ namespace eta_hsm {
 
 // Do NOT open up eta::example_control namespace in the header
 
-template<>
-template<typename Current>
-inline void examples::controller::Top::handleEvent(examples::controller::ExampleControl& stateMachine, const Current& current, Event event) const
+template <>
+template <typename Current>
+inline void examples::controller::Top::handleEvent(examples::controller::ExampleControl& stateMachine,
+                                                   const Current& current, Event event) const
 {
     switch (event)
     {
@@ -20,12 +21,13 @@ inline void examples::controller::Top::handleEvent(examples::controller::Example
         default:
             break;
     }
-    return; // Top has no parent
+    return;  // Top has no parent
 }
 
-template<>
-template<typename Current>
-inline void examples::controller::Alive::handleEvent(examples::controller::ExampleControl& stateMachine, const Current& currentState, Event event) const
+template <>
+template <typename Current>
+inline void examples::controller::Alive::handleEvent(examples::controller::ExampleControl& stateMachine,
+                                                     const Current& currentState, Event event) const
 {
     utils::TestLog::instance() << "Alive::handleEvent()" << std::endl;
     switch (event)
@@ -46,7 +48,8 @@ inline void examples::controller::Alive::handleEvent(examples::controller::Examp
             return;
         }
         case examples::controller::ExampleEvent::eDie:
-        {   // Note: order of these case statements does NOT matter as the StateMachine
+        {  // Note: order of these case statements does NOT matter as the
+           // StateMachine
             //       is only ever dispatched with a single utils.
             // In other words, utils prioritization happens long before we get here.
             utils::TestLog::instance() << "Party over..." << std::endl;
@@ -57,7 +60,8 @@ inline void examples::controller::Alive::handleEvent(examples::controller::Examp
         {
             // We can now also set timers to fire events at specified points in the future
             utils::TestLog::instance() << "setting timer to look at watch in 2 units of time" << std::endl;
-            stateMachine.eventScheduler().addTimer(examples::controller::ExampleEvent::eLookAtWatch, kState, std::chrono::milliseconds(2000));
+            stateMachine.eventScheduler().addTimer(examples::controller::ExampleEvent::eLookAtWatch, kState,
+                                                   std::chrono::milliseconds(2000));
             return;
         }
         default:
@@ -66,9 +70,10 @@ inline void examples::controller::Alive::handleEvent(examples::controller::Examp
     return ParentState::handleEvent(stateMachine, currentState, event);
 }
 
-template<>
-template<typename Current>
-inline void examples::controller::Sober::handleEvent(examples::controller::ExampleControl& stateMachine, const Current& currentState, Event event) const
+template <>
+template <typename Current>
+inline void examples::controller::Sober::handleEvent(examples::controller::ExampleControl& stateMachine,
+                                                     const Current& currentState, Event event) const
 {
     utils::TestLog::instance() << "Sober::handleEvent()" << std::endl;
     switch (event)
@@ -79,17 +84,17 @@ inline void examples::controller::Sober::handleEvent(examples::controller::Examp
         {
             utils::TestLog::instance() << "Sober and drinking beer!" << std::endl;
             stateMachine.increaseBac(0.025);
-            if(stateMachine.getBac() >= 0.08)
+            if (stateMachine.getBac() >= 0.08)
             {
                 Transition<Current, ThisState, examples::controller::Drunk> t(stateMachine);
-            } // entrance actions of new state actually occur when Transition object goes out of scope
+            }  // entrance actions of new state actually occur when Transition object goes out of scope
             return;
         }
         case examples::controller::ExampleEvent::eDrinkWiskey:
         {
             utils::TestLog::instance() << "Sober and drinking whiskey!" << std::endl;
             stateMachine.increaseBac(0.05);
-            if(stateMachine.getBac() >= 0.08)
+            if (stateMachine.getBac() >= 0.08)
             {
                 Transition<Current, ThisState, examples::controller::Drunk> t(stateMachine);
             }
@@ -107,9 +112,10 @@ inline void examples::controller::Sober::handleEvent(examples::controller::Examp
     return ParentState::handleEvent(stateMachine, currentState, event);
 }
 
-template<>
-template<typename Current>
-inline void examples::controller::Drunk::handleEvent(examples::controller::ExampleControl& stateMachine, const Current& currentState, Event event) const
+template <>
+template <typename Current>
+inline void examples::controller::Drunk::handleEvent(examples::controller::ExampleControl& stateMachine,
+                                                     const Current& currentState, Event event) const
 {
     utils::TestLog::instance() << "Drunk::handleEvent()" << std::endl;
     switch (event)
@@ -132,19 +138,20 @@ inline void examples::controller::Drunk::handleEvent(examples::controller::Examp
 // e.g. Bored::handleEvent() just does the same (default) behavior implemented in Alive::handleEvent()
 // e.g. Dead::handleEvent() doesn't have to do anything at all!
 
-
 // We do have to declare the initialization behavior of any composite states
 // This can optionally take additional acctions, but at a minimum, they must declare
 // initialization of their default substate.
 // Note: They must be declared in bottom-up order.
-template<> inline void examples::controller::Alive::init(examples::controller::ExampleControl& stateMachine)
+template <>
+inline void examples::controller::Alive::init(examples::controller::ExampleControl& stateMachine)
 {
     // This declares which substate we default into
     Init<examples::controller::Sober> i(stateMachine);
     utils::TestLog::instance() << "init_Alive" << std::endl;
 }
 
-template<> inline void examples::controller::Top::init(examples::controller::ExampleControl& stateMachine)
+template <>
+inline void examples::controller::Top::init(examples::controller::ExampleControl& stateMachine)
 {
     // This declares which substate we default into
     Init<examples::controller::Alive> i(stateMachine);
@@ -156,4 +163,4 @@ template<> inline void examples::controller::Top::init(examples::controller::Exa
 // We still have the option of specializing some of them by specific state here if we want to.
 // template<> inline void Dead::during(ExampleControl& stateMachine) const { stateMachine.doSomethingDifferent(); }
 
-} // namespace eta_hsm
+}  // namespace eta_hsm

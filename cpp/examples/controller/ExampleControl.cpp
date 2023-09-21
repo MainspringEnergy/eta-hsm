@@ -9,7 +9,7 @@ namespace examples {
 namespace controller {
 
 ExampleControl::ExampleControl()
-    //: StateMachine("ExampleControl")
+//: StateMachine("ExampleControl")
 {
     // We are responsible for initializing mState to something useful
     // In order to make sure we hit all of the correct entry methods
@@ -18,9 +18,7 @@ ExampleControl::ExampleControl()
     eta_hsm::Transition<Top, Top, Top> t(*this);
 }
 
-ExampleControl::~ExampleControl()
-{
-}
+ExampleControl::~ExampleControl() {}
 
 /// geneirc top-level update
 void ExampleControl::update(const examples::controller::Input& input)
@@ -39,10 +37,10 @@ void ExampleControl::update(const examples::controller::Input& input)
     // In any case, a single utils needs to be selected and "set" before calling dispatch,
     // although there is nothing stopping you from dispatching the state machine multiple times
     // in a single controller "update" if the time budget allows.
-    if ( !mEventBucket.empty() )
+    if (!mEventBucket.empty())
     {
         Event evt = mEventBucket.getEvent();
-        //TestLog::instance() << "Dispatching hsm with " << wise_enum::to_string(evt) << std::endl;
+        // TestLog::instance() << "Dispatching hsm with " << wise_enum::to_string(evt) << std::endl;
         dispatch(evt);
     }
 
@@ -53,15 +51,13 @@ void ExampleControl::update(const examples::controller::Input& input)
 void ExampleControl::increaseBac(Real amt)
 {
     mBac += amt;
-    if(mBac < 0.0)
+    if (mBac < 0.0)
     {
         mBac = 0.0;
     }
     utils::TestLog::instance() << "BAC = " << mBac << std::endl;
 }
 
-
-
-} // namespace controller
-} // namespace examples
-} // namespace eta_hsm
+}  // namespace controller
+}  // namespace examples
+}  // namespace eta_hsm

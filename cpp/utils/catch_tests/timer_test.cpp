@@ -1,8 +1,9 @@
 // eta/hsm/timer_test.cpp
 
+#include "eta/event/Timer.hpp"
+
 #include "eta/catch/catch.hpp"
 #include "eta/chrono/FakeClock.hpp"
-#include "eta/event/Timer.hpp"
 #include "eta/logger/Logger.hpp"
 #include "eta/varz/enum.hpp"
 
@@ -13,24 +14,11 @@ namespace {
 
 ETA_DEFINE_LOGGER(logger, "event_test");
 
-enum class Event
-{
-    eNone,
-    eOne,
-    eTwo,
-    eThree,
-    eMax
-};
+enum class Event { eNone, eOne, eTwo, eThree, eMax };
 
-ETA_VARZ_ENUM( State, uint
-    , eNone
-    , eRed
-    , eGreen
-    , eBlue
-);
+ETA_VARZ_ENUM(State, uint, eNone, eRed, eGreen, eBlue);
 
-enum class UniqueId
-{
+enum class UniqueId {
     eNone,
     eAlpha,
     eBravo,
@@ -62,8 +50,10 @@ FEATURE("Timer", "[utils]")
 
         SCENARIO("Timers sort in the correct order")
         {
-            event::Timer<TimerTraits<Clock, Event, State>> firstTimer(Event::eOne, State::eRed, epoch + std::chrono::seconds(15));
-            event::Timer<TimerTraits<Clock, Event, State>> secondTimer(Event::eOne, State::eRed, epoch + std::chrono::seconds(30));
+            event::Timer<TimerTraits<Clock, Event, State>> firstTimer(Event::eOne, State::eRed,
+                                                                      epoch + std::chrono::seconds(15));
+            event::Timer<TimerTraits<Clock, Event, State>> secondTimer(Event::eOne, State::eRed,
+                                                                       epoch + std::chrono::seconds(30));
 
             CHECK(secondTimer > firstTimer);
             CHECK(!(secondTimer < firstTimer));
@@ -126,9 +116,9 @@ FEATURE("TimerBank", "[utils]")
             CHECK(bank.checkForSingleFiredEvent(epoch + std::chrono::seconds(25)) == Event::eNone);
             Event firstEvent = bank.checkForSingleFiredEvent(epoch + std::chrono::seconds(100));
             Event secondEvent = bank.checkForSingleFiredEvent(epoch + std::chrono::seconds(100));
-            CHECK( firstEvent != Event::eNone );
-            CHECK( secondEvent != Event::eNone );
-            CHECK( firstEvent != secondEvent );
+            CHECK(firstEvent != Event::eNone);
+            CHECK(secondEvent != Event::eNone);
+            CHECK(firstEvent != secondEvent);
             CHECK(bank.checkForSingleFiredEvent(epoch + std::chrono::seconds(100)) == Event::eNone);
         }
 
@@ -173,7 +163,6 @@ FEATURE("UniqueId", "[utils]")
         using Clock = eta::chrono::FakeClock<>;
         auto epoch = std::chrono::time_point<Clock>();
         TimerBank<TimerTraits<Clock, Event, State, UniqueId>> bank;
-
 
         SCENARIO("Requesting to clear an non-existent timer does not fail")
         {
@@ -316,8 +305,7 @@ FEATURE("StaticTimerBank", "[utils]")
     }
 }
 
-
-} // namespace
-} // namespace testing
-} // namespace hsm
-} // namespace eta
+}  // namespace
+}  // namespace testing
+}  // namespace event
+}  // namespace eta

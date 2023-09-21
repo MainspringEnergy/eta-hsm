@@ -1,12 +1,12 @@
 #pragma once
 
-#include "../../utils/Timer.hpp"
-#include "../../Hsm.hpp"
-#include "../../utils/TestLog.hpp"
-
 #include <chrono>
 #include <memory>
 #include <queue>
+
+#include "../../Hsm.hpp"
+#include "../../utils/TestLog.hpp"
+#include "../../utils/Timer.hpp"
 
 namespace eta_hsm {
 namespace examples {
@@ -34,30 +34,28 @@ enum class ExampleState {
     eDead,
 };
 
-struct Logger {}; // placeholder
+struct Logger {};  // placeholder
 
-struct Input
-{
-    float voltage {0};
+struct Input {
+    float voltage{0};
 };
 
-struct ExampleControlTraits
-{
+struct ExampleControlTraits {
     using Clock = std::chrono::steady_clock;
     using Event = ExampleEvent;
     using StateEnum = ExampleState;
 
-//    ETA_NAMED_EVENT(StateTransition, "StateTransitionEventName", (Event, utils), (StateEnum, from), (StateEnum, to));
+    //    ETA_NAMED_EVENT(StateTransition, "StateTransitionEventName", (Event, utils), (StateEnum, from), (StateEnum,
+    //    to));
 
     static constexpr DefaultActions kDefaultActions = eta_hsm::DefaultActions::eControlUpdate;
     static constexpr bool kClearTimersOnExit = true;
 };
 
 /// With eta::hsm, the top-level controller can BE the state machine
-class ExampleControl : public eta_hsm::StateMachine<ExampleControl, ExampleControlTraits>
-{
+class ExampleControl : public eta_hsm::StateMachine<ExampleControl, ExampleControlTraits> {
 public:
-    using Input = EmptyType; // rely on empty during() as an example of legacy control
+    using Input = EmptyType;  // rely on empty during() as an example of legacy control
 
     ExampleControl();
     virtual ~ExampleControl();
@@ -78,20 +76,20 @@ public:
     void update(const controller::Input& input);
 
     /// Templatized state-specific update functions
-    template<ExampleState state>
-    void stateUpdate(); // will use internal mInput reference
+    template <ExampleState state>
+    void stateUpdate();  // will use internal mInput reference
 
-    template<ExampleState state>
-    void entry() // If called by hsm within "update", input is available as mInput
+    template <ExampleState state>
+    void entry()  // If called by hsm within "update", input is available as mInput
     {
-        //TestLog::instance() << "enter State " << wise_enum::to_string(state) << std::endl;
+        // TestLog::instance() << "enter State " << wise_enum::to_string(state) << std::endl;
         mAccumultedEntryExit += static_cast<int>(state);
     }
 
-    template<ExampleState state>
-    void exit() // If called by hsm within "update", input is available as mInput
+    template <ExampleState state>
+    void exit()  // If called by hsm within "update", input is available as mInput
     {
-        //TestLog::instance() << "exit State " << wise_enum::to_string(state) << std::endl;
+        // TestLog::instance() << "exit State " << wise_enum::to_string(state) << std::endl;
         mAccumultedEntryExit -= static_cast<int>(state);
     }
 
@@ -113,25 +111,24 @@ public:
 
 private:
     /// A place to hold events.  Derived StateMachines can choose what type of bucket to use.
-    utils::PrioritizedEventBucket<Event> mEventBucket {};
+    utils::PrioritizedEventBucket<Event> mEventBucket{};
 
     /// Hold potentially several timers that will set off events when they expire
-    EventScheduler mEventScheduler {};
+    EventScheduler mEventScheduler{};
 
     // This is non-standard for Update API, but we may need to hold a reference to the input
     // in order to avoid passing it around through all of the states.
-    const controller::Input* mpInput {};
+    const controller::Input* mpInput{};
 
     // Additional stateful data
-    Real mBac {0.0};
-    bool mAlive {true};
+    Real mBac{0.0};
+    bool mAlive{true};
 
     // Just using this as a silly example and to support unit testing
-    int mAccumultedEntryExit {0};
+    int mAccumultedEntryExit{0};
 };
 
-
-template<ExampleState kState>
+template <ExampleState kState>
 using ExampleTraits = StateTraits<ExampleControl, ExampleState, kState>;
 
 /// Declare the states that exist in this example Hsm (and their relationships) here
@@ -142,10 +139,9 @@ using Drunk = eta_hsm::LeafState<ExampleTraits<ExampleState::eDrunk>, Alive>;
 using Bored = eta_hsm::LeafState<ExampleTraits<ExampleState::eBored>, Alive>;
 using Dead = eta_hsm::LeafState<ExampleTraits<ExampleState::eDead>, Top>;
 
-} // namespace controller
-} // namespace examples
-} // namespace eta_hsm
+}  // namespace controller
+}  // namespace examples
+}  // namespace eta_hsm
 
-#include "ExampleControl-inl.hpp"
 #include "ExampleControl-hsm.hpp"
-
+#include "ExampleControl-inl.hpp"
