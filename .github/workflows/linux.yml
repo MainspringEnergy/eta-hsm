@@ -24,7 +24,7 @@ jobs:
         with:
           clang-format-version: '15'
           check-path: 'cpp'
-          exclude-regex: '''
+          exclude-regex: ''
 
   unit_tests:
     runs-on: ubuntu-22.04
