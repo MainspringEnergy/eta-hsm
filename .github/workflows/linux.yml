@@ -38,6 +38,7 @@ jobs:
         run: |
           mkdir build
           cmake -S cpp -B build
+          ls build/_deps
       - name: Build
         working-directory: build
         run: make
