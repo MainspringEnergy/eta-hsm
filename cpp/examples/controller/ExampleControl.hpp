@@ -111,7 +111,7 @@ public:
 
 private:
     /// A place to hold events.  Derived StateMachines can choose what type of bucket to use.
-    utils::PrioritizedEventBucket<Event> mEventBucket {};
+    utils::PrioritizedEventBucket<Event> mEventBucket{};
 
     /// Hold potentially several timers that will set off events when they expire
     EventScheduler mEventScheduler{};
