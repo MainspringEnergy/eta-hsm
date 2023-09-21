@@ -35,7 +35,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: CMake
-        working-directory: cpp
         run: |
           mkdir build
           cmake -S cpp -B build
