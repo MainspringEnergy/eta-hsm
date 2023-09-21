@@ -37,7 +37,7 @@ jobs:
       - name: Build
         working-directory: cpp
         run: |
-          cmake
+          cmake .
           make
       - name: Run cpp unit tests
         working-directory: cpp
