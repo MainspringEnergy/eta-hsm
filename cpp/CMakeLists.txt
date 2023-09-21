@@ -28,6 +28,14 @@ FetchContent_Declare(WiseEnum
 )
 FetchContent_MakeAvailable(WiseEnum)
 
+# TODO: revise wise_enum include solution
+# Note: fetching as 'wise_enum' allows including using 'wise_enum/wise_enum.h'
+FetchContent_Populate(wise-enum-include
+  GIT_REPOSITORY https://github.com/quicknir/wise_enum.git
+  SOURCE_DIR "${FETCHCONTENT_BASE_DIR}/wise_enum"
+)
+include_directories(SYSTEM ${FETCHCONTENT_BASE_DIR})
+
 add_library(eta_hsm_lib
     Hsm.cpp
     )
