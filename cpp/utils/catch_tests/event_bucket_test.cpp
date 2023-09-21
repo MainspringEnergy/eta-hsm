@@ -11,12 +11,11 @@ namespace {
 
 ETA_DEFINE_LOGGER(logger, "event_test");
 
-enum class TestEnum
-{
+enum class TestEnum {
     eNone,
-    eOne, // interpreted as lower priority
+    eOne,  // interpreted as lower priority
     eTwo,
-    eThree, // interpreted as higher priority
+    eThree,  // interpreted as higher priority
     eMax
 };
 
@@ -93,7 +92,6 @@ FEATURE("EventBucket", "[utils]")
         // We will pass a reference of type "EventBucket" to the producers of events
         EventBucket<TestEnum>& bucket = pooledBucket;
 
-
         SCENARIO("Add and remove events")
         {
             bucket.addEvent(TestEnum::eTwo);
@@ -123,7 +121,7 @@ FEATURE("EventBucket", "[utils]")
     }
 }
 
-} // namespace
-} // namespace testing
-} // namespace hsm
-} // namespace eta
+}  // namespace
+}  // namespace testing
+}  // namespace event
+}  // namespace eta

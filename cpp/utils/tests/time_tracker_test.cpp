@@ -1,10 +1,11 @@
 
-#include "wise_enum/wise_enum.h"
-#include "../FakeClock.hpp"
-#include "../TimeTracker.hpp"
 #include <gtest/gtest.h>
 
 #include <string>
+
+#include "../FakeClock.hpp"
+#include "../TimeTracker.hpp"
+#include "wise_enum/wise_enum.h"
 
 namespace eta_hsm {
 namespace utils {
@@ -58,6 +59,6 @@ TEST(TimeTrackerTest, TimeTrackerTest)
     EXPECT_EQ(tracker.timeInState(TestEnum::eCharlie), std::chrono::seconds{0});
 }
 
-} // namespace tests
-} // namespace utils
-} // namespace eta_hsm
+}  // namespace tests
+}  // namespace utils
+}  // namespace eta_hsm

@@ -7,51 +7,51 @@ namespace examples {
 namespace controller {
 
 /// Templatized state-specific update functions
-template<>
+template <>
 inline void ExampleControl::stateUpdate<ExampleState::eSober>()
 {
     // Can use mpInput-> here to access inputs
     utils::TestLog::instance() << "stateUpdate<eSober> " << std::endl;
 
     // Possibly check for fault-like situations
-    if(getBac() > 0.35)
-    {   // We can queue events directly from within the state machine if we want to
+    if (getBac() > 0.35)
+    {  // We can queue events directly from within the state machine if we want to
         addEvent(ExampleEvent::eDie);
     }
     // Do something reasonable
-    increaseBac(-0.01); // metabolize alcohol
+    increaseBac(-0.01);  // metabolize alcohol
 }
 
-template<>
+template <>
 inline void ExampleControl::stateUpdate<ExampleState::eDrunk>()
 {
     // Can use mpInput-> here to access inputs
     utils::TestLog::instance() << "stateUpdate<eDrunk> " << std::endl;
 
     // Possibly check for fault-like situations
-    if(getBac() > 0.35)
+    if (getBac() > 0.35)
     {
         addEvent(ExampleEvent::eDie);
     }
     // Do something unreasonable
-    increaseBac(-0.01); // metabolize alcohol
+    increaseBac(-0.01);  // metabolize alcohol
 }
 
-template<>
+template <>
 inline void ExampleControl::stateUpdate<ExampleState::eDead>()
 {
     utils::TestLog::instance() << "stateUpdate<eDead> " << std::endl;
     // do nothing...
 }
 
-template<>
+template <>
 inline void ExampleControl::stateUpdate<ExampleState::eBored>()
 {
     utils::TestLog::instance() << "stateUpdate<eBored> " << std::endl;
     // do nothing...
 }
 
-template<>
+template <>
 inline void ExampleControl::entry<ExampleState::eAlive>()
 {
     // Yes, we can also now test alive-ness by querying state, but I'm keeping this around as an example
@@ -61,7 +61,7 @@ inline void ExampleControl::entry<ExampleState::eAlive>()
     mAlive = true;
 }
 
-template<>
+template <>
 inline void ExampleControl::exit<ExampleState::eAlive>()
 {
     utils::TestLog::instance() << "exit_Alive " << std::endl;
@@ -69,7 +69,6 @@ inline void ExampleControl::exit<ExampleState::eAlive>()
     mAlive = false;
 }
 
-} // namespace controller
-} // namespace examples
-} // namespace eta_hsm
-
+}  // namespace controller
+}  // namespace examples
+}  // namespace eta_hsm

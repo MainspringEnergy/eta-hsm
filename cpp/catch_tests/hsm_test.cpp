@@ -1,6 +1,7 @@
 // eta/hsm/tests/test.cpp
 
 #include "eta/hsm/Hsm.hpp"
+
 #include "eta/hsm/tests/Canonical.hpp"
 
 namespace eta {
@@ -41,7 +42,7 @@ FEATURE("Canonical HSM Example", "[hsm]")
             CHECK(canonicalHsm.identify() == canonical::CanonicalState::eS11);
         }
 
-        SCENARIO("Event A_LOCAL in state S11") // I'm not sure if this one actually makes sense or not
+        SCENARIO("Event A_LOCAL in state S11")  // I'm not sure if this one actually makes sense or not
         {
             TestLog::instance() << "Scenario: Event A_LOCAL in state S11" << std::endl;
             TestLog::instance().startCapture();
@@ -59,7 +60,8 @@ FEATURE("Canonical HSM Example", "[hsm]")
             canonicalHsm.dispatch(canonical::CanonicalEvent::E);
             canonicalHsm.during();
             TestLog::instance().stopCapture();
-            CHECK(TestLog::instance().getCaptured() == "exit_S11 exit_S1 exit_S0 enter_S0 enter_S2 enter_S21 enter_S211 during_S211 ");
+            CHECK(TestLog::instance().getCaptured() ==
+                  "exit_S11 exit_S1 exit_S0 enter_S0 enter_S2 enter_S21 enter_S211 during_S211 ");
             CHECK(canonicalHsm.identify() == canonical::CanonicalState::eS211);
         }
 
@@ -125,9 +127,9 @@ FEATURE("Canonical HSM Example", "[hsm]")
             TestLog::instance() << "Auto transition from S12 back to S11" << std::endl;
             TestLog::instance().startCapture();
             CHECK(canonicalHsm.identify() == canonical::CanonicalState::eS11);
-            canonicalHsm.dispatch(canonical::CanonicalEvent::Z); // get us into S12
+            canonicalHsm.dispatch(canonical::CanonicalEvent::Z);  // get us into S12
             CHECK(canonicalHsm.identify() == canonical::CanonicalState::eS12);
-            canonicalHsm.during(); // we should auto-transition back on first during
+            canonicalHsm.during();  // we should auto-transition back on first during
             CHECK(canonicalHsm.identify() == canonical::CanonicalState::eS11);
             canonicalHsm.during();
             CHECK(canonicalHsm.identify() == canonical::CanonicalState::eS11);
@@ -170,7 +172,8 @@ FEATURE("Canonical HSM Example", "[hsm]")
             canonicalHsm.dispatch(canonical::CanonicalEvent::E);
             canonicalHsm.during();
             TestLog::instance().stopCapture();
-            CHECK(TestLog::instance().getCaptured() == "exit_S211 exit_S21 exit_S2 exit_S0 enter_S0 enter_S2 enter_S21 enter_S211 during_S211 ");
+            CHECK(TestLog::instance().getCaptured() ==
+                  "exit_S211 exit_S21 exit_S2 exit_S0 enter_S0 enter_S2 enter_S21 enter_S211 during_S211 ");
             CHECK(canonicalHsm.identify() == canonical::CanonicalState::eS211);
         }
 
@@ -181,7 +184,8 @@ FEATURE("Canonical HSM Example", "[hsm]")
             canonicalHsm.dispatch(canonical::CanonicalEvent::E_LOCAL);
             canonicalHsm.during();
             TestLog::instance().stopCapture();
-            CHECK(TestLog::instance().getCaptured() == "exit_S211 exit_S21 exit_S2 enter_S2 enter_S21 enter_S211 during_S211 ");
+            CHECK(TestLog::instance().getCaptured() ==
+                  "exit_S211 exit_S21 exit_S2 enter_S2 enter_S21 enter_S211 during_S211 ");
             CHECK(canonicalHsm.identify() == canonical::CanonicalState::eS211);
         }
 
@@ -236,7 +240,8 @@ FEATURE("Canonical HSM Example", "[hsm]")
             canonicalHsm.dispatch(canonical::CanonicalEvent::G);
             canonicalHsm.during();
             TestLog::instance().stopCapture();
-            CHECK(TestLog::instance().getCaptured() == "exit_S211 exit_S21 exit_S2 exit_S0 enter_S0 init_S0 enter_S1 init_S1 enter_S11 during_S11 ");
+            CHECK(TestLog::instance().getCaptured() ==
+                  "exit_S211 exit_S21 exit_S2 exit_S0 enter_S0 init_S0 enter_S1 init_S1 enter_S11 during_S11 ");
             CHECK(canonicalHsm.identify() == canonical::CanonicalState::eS11);
         }
 
@@ -247,7 +252,8 @@ FEATURE("Canonical HSM Example", "[hsm]")
             canonicalHsm.dispatch(canonical::CanonicalEvent::G_LOCAL);
             canonicalHsm.during();
             TestLog::instance().stopCapture();
-            CHECK(TestLog::instance().getCaptured() == "exit_S211 exit_S21 exit_S2 init_S0 enter_S1 init_S1 enter_S11 during_S11 ");
+            CHECK(TestLog::instance().getCaptured() ==
+                  "exit_S211 exit_S21 exit_S2 init_S0 enter_S1 init_S1 enter_S11 during_S11 ");
             CHECK(canonicalHsm.identify() == canonical::CanonicalState::eS11);
         }
 
@@ -275,7 +281,7 @@ FEATURE("Canonical HSM Example", "[hsm]")
     }
 }
 
-} // namespace
-} // namespace testing
-} // namespace hsm
-} // namespace eta
+}  // namespace
+}  // namespace testing
+}  // namespace hsm
+}  // namespace eta

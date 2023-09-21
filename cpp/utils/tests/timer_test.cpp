@@ -1,27 +1,22 @@
 // timer_test.cpp
 
-#include "../FakeClock.hpp"
 #include "../Timer.hpp"
+
 #include <gtest/gtest.h>
+
 #include <chrono>
+
+#include "../FakeClock.hpp"
 
 namespace eta_hsm {
 namespace utils {
 namespace tests {
 
-enum class Event
-{
-    eNone,
-    eOne,
-    eTwo,
-    eThree,
-    eMax
-};
+enum class Event { eNone, eOne, eTwo, eThree, eMax };
 
 WISE_ENUM_CLASS((State, uint32_t), eNone, eRed, eGreen, eBlue)
 
-enum class UniqueId
-{
+enum class UniqueId {
     eNone,
     eAlpha,
     eBravo,
@@ -66,12 +61,10 @@ TEST(TimerTest, TimerBank)
     EXPECT_TRUE(bank.empty());
     EXPECT_EQ(bank.checkForSingleFiredEvent(epoch), Event::eNone);
 
-
     // SCENARIO("Requesting to clear a non-existent timer does not fail")
     EXPECT_TRUE(bank.empty());
     bank.clearTimer(Event::eTwo, State::eBlue);
     EXPECT_TRUE(true);
-
 
     // SCENARIO("Timers go off in expiration order, even if added out of order")
     bank.addTimer(Event::eOne, State::eRed, epoch + std::chrono::seconds(100));
@@ -83,7 +76,7 @@ TEST(TimerTest, TimerBank)
     EXPECT_EQ(bank.checkForSingleFiredEvent(epoch + std::chrono::seconds(75)), Event::eNone);
     EXPECT_EQ(bank.checkForSingleFiredEvent(epoch + std::chrono::seconds(125)), Event::eOne);
     EXPECT_EQ(bank.checkForSingleFiredEvent(epoch + std::chrono::seconds(125)), Event::eNone);
-    EXPECT_EQ(bank.checkForSingleFiredEvent(epoch + std::chrono::seconds(175)),Event::eThree);
+    EXPECT_EQ(bank.checkForSingleFiredEvent(epoch + std::chrono::seconds(175)), Event::eThree);
     EXPECT_EQ(bank.checkForSingleFiredEvent(epoch + std::chrono::seconds(175)), Event::eNone);
 
     // SCENARIO("Checking bank after multiple timers have expired only fires the first, second remains for next check")
@@ -255,7 +248,6 @@ TEST(TimerTest, StaticTimerBank)
     EXPECT_TRUE(bucket.empty());
 }
 
-
-} // namespace tests
-} // namespace utils
-} // namespace eta_hsm
+}  // namespace tests
+}  // namespace utils
+}  // namespace eta_hsm

@@ -1,3 +1,7 @@
+#include <fstream>
+#include <iostream>
+#include <string>
+
 #include "eta/catch/catch.hpp"
 #include "eta/ctrl/define.hpp"
 #include "eta/logger/Logger.hpp"
@@ -6,10 +10,6 @@
 #include "eta/varz/asCsvData.hpp"
 #include "eta/varz/asCsvHeader.hpp"
 
-#include <fstream>
-#include <iostream>
-#include <string>
-
 #define CSV_IO_NO_THREAD
 #include <csv/csv.h>
 
@@ -17,15 +17,11 @@ namespace eta {
 namespace time_tracker {
 namespace {
 
-const char kDelim {','};
+const char kDelim{','};
 
 ETA_DEFINE_LOGGER(logger, "time_tracker_tests");
 
-ETA_VARZ_ENUM( TestEnum, ctrl::Uint
-    , eAlpha
-    , eBravo
-    , eCharlie);
-
+ETA_VARZ_ENUM(TestEnum, ctrl::Uint, eAlpha, eBravo, eCharlie);
 
 FEATURE("TimeTracker", "[time_tracker]")
 {
@@ -81,7 +77,6 @@ FEATURE("TimeTracker", "[time_tracker]")
     }
 }
 
-
-} // namespace
-} // namespace time_tracker
-} // namespace eta
+}  // namespace
+}  // namespace time_tracker
+}  // namespace eta

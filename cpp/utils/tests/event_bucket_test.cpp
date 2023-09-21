@@ -8,12 +8,11 @@ namespace eta_hsm {
 namespace utils {
 namespace tests {
 
-enum class TestEnum
-{
+enum class TestEnum {
     eNone,
-    eOne, // interpreted as lower priority
+    eOne,  // interpreted as lower priority
     eTwo,
-    eThree, // interpreted as higher priority
+    eThree,  // interpreted as higher priority
     eMax
 };
 
@@ -65,7 +64,6 @@ TEST(EventBucketTest, PrioritizedEventBucketTest)
     EXPECT_EQ(prioritizedBucket.getEvent(), TestEnum::eThree);
     EXPECT_TRUE(prioritizedBucket.empty());
 
-
     // Add and clear events
     bucket.addEvent(TestEnum::eTwo);
     bucket.addEvent(TestEnum::eThree);
@@ -76,6 +74,6 @@ TEST(EventBucketTest, PrioritizedEventBucketTest)
     EXPECT_TRUE(prioritizedBucket.empty());
 }
 
-} // namespace tests
-} // namespace utils
-} // namespace eta_hsm
+}  // namespace tests
+}  // namespace utils
+}  // namespace eta_hsm

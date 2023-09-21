@@ -2,14 +2,12 @@
 
 #include <gtest/gtest.h>
 
-class CanonicalTest : public ::testing::Test
-{
+class CanonicalTest : public ::testing::Test {
 protected:
     void SetUp() override {}
     void TearDown() override {}
     eta_hsm::examples::canonical::Canonical canonical_hsm_;
 };
-
 
 TEST_F(CanonicalTest, InitialConditionsTest)
 {

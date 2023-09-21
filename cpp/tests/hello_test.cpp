@@ -9,7 +9,7 @@ TEST(HelloTest, BasicAssertions)
     EXPECT_EQ(7 * 6, 42);
 }
 
-//TEST(HelloTest, BadTest)
+// TEST(HelloTest, BadTest)
 //{
-//    EXPECT_TRUE(false);
-//}
+//     EXPECT_TRUE(false);
+// }
