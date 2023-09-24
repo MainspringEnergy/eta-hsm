@@ -1,0 +1,19 @@
+---
+# Start with defaults from the Google style, but with 4 columns indentation.
+BasedOnStyle: Google
+IndentWidth: 4
+AccessModifierOffset: -4
+ColumnLimit: 120
+AlignTrailingComments: false
+BreakBeforeBraces: Custom
+BraceWrapping:  # similar to Allman, but with just a couple of tweaks
+  AfterNamespace: false
+  AfterClass: false
+  AfterEnum: false
+  AfterStruct: false
+  AfterCaseLabel: true
+  AfterFunction: true
+  AfterControlStatement: true
+  AfterObjCDeclaration: true
+  SplitEmptyFunction: false
+  BeforeElse: true

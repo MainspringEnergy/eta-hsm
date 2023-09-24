@@ -5,9 +5,7 @@ namespace eta::hsm::update_control {
 
 template <StateEnum State>
 void UpdateControlHsm::stateUpdate(const Input& input)
-{
-
-}
+{}
 
 template <StateEnum State>
 void UpdateControlHsm::entry()
@@ -34,8 +32,6 @@ void UpdateControlHsm::exit()
 
 template <StateEnum State>
 void UpdateControlHsm::reset()
-{
+{}
 
-}
-
-} // namespace eta::hsm::update_control
+}  // namespace eta::hsm::update_control
