@@ -38,7 +38,8 @@ include_directories(SYSTEM ${FETCHCONTENT_BASE_DIR})
 
 add_library(eta_hsm_lib
     Hsm.cpp
-    )
+    AutoLoggedStateMachine.cpp
+)
 
 add_subdirectory(examples)
 add_subdirectory(tests)
