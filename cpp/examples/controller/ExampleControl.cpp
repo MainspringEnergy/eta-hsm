@@ -31,7 +31,7 @@ void ExampleControl::update(const examples::controller::Input& input)
     // so that I can pass in fake clock times.
     // mEventScheduler.checkTimers(std::chrono::system_clock::now(), mEventBucket);
 
-    // Select which utils to dispatch state machine with.
+    // Select which event to dispatch state machine with.
     // Specific logic of how events are categorized, prioritized, flushed, etc... is up to the
     // particular StateMachine.  This is intended just to show an example of what could be done.
     // In any case, a single utils needs to be selected and "set" before calling dispatch,
