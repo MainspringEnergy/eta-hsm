@@ -1,4 +1,4 @@
-// eta/hsm/ExampleControl-hsm.hpp
+// ExampleControl-hsm.hpp
 
 #pragma once
 
@@ -7,7 +7,7 @@
 // The only thing that we should be adding below are eventHandler() and during() for each state.
 namespace eta_hsm {
 
-// Do NOT open up eta::example_control namespace in the header
+// Do NOT open up eta_hsm::examples::controller namespace in the header
 
 template <>
 template <typename Current>
@@ -136,10 +136,10 @@ inline void examples::controller::Drunk::handleEvent(examples::controller::Examp
 
 // We don't have to implement State::handleEvent at all if it does not do anything different than superstate
 // e.g. Bored::handleEvent() just does the same (default) behavior implemented in Awake::handleEvent()
-// e.g. Dead::handleEvent() doesn't have to do anything at all!
+// e.g. Unconscious::handleEvent() doesn't have to do anything at all!
 
 // We do have to declare the initialization behavior of any composite states
-// This can optionally take additional acctions, but at a minimum, they must declare
+// This can optionally take additional actions, but at a minimum, they must declare
 // initialization of their default substate.
 // Note: They must be declared in bottom-up order.
 template <>

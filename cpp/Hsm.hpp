@@ -38,7 +38,7 @@ public:
     /// Not intended for use in non-test code
     virtual typename Traits::StateEnum identify() const = 0;
 
-    /// Test for membership of some parent super-state (ncluding yourself)
+    /// Test for membership of some parent super-state (including yourself)
     /// Definitely not intended for use in non-test code
     virtual bool isSubstateOf(typename Traits::StateEnum queryState) const
     {

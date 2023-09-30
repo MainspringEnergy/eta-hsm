@@ -26,3 +26,12 @@ target_link_libraries(example_control_test
     GTest::gtest_main
 )
 gtest_discover_tests(example_control_test)
+
+add_executable(cd_player_test
+        cd_player_test.cpp
+)
+target_link_libraries(cd_player_test
+        cd_player_lib
+        GTest::gtest_main
+)
+gtest_discover_tests(cd_player_test)

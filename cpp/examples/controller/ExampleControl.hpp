@@ -12,7 +12,8 @@ namespace eta_hsm {
 namespace examples {
 namespace controller {
 
-/// Top-level controller for APU control process
+/// Example of a "hybrid state machine" that integrates a "controller"
+/// for "continuous state" with a traditional discrete state machine.
 
 using Real = float;
 
@@ -44,10 +45,6 @@ struct ExampleControlTraits {
     using Clock = std::chrono::steady_clock;
     using Event = ExampleEvent;
     using StateEnum = ExampleState;
-
-    //    ETA_NAMED_EVENT(StateTransition, "StateTransitionEventName", (Event, utils), (StateEnum, from), (StateEnum,
-    //    to));
-
     static constexpr DefaultActions kDefaultActions = eta_hsm::DefaultActions::eControlUpdate;
     static constexpr bool kClearTimersOnExit = true;
 };
@@ -60,7 +57,7 @@ public:
     ExampleControl();
     virtual ~ExampleControl();
 
-    using Parent = eta_hsm::StateMachine<ExampleControl, ExampleControlTraits>;
+    // using Parent = eta_hsm::StateMachine<ExampleControl, ExampleControlTraits>;
 
     friend class TopState<ExampleControl>;
 
