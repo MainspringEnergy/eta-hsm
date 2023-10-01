@@ -18,21 +18,9 @@ namespace controller {
 
 using Real = float;
 
-WISE_ENUM_CLASS((ExampleEvent, int32_t),
-                eLookAtWatch,
-                eStartWatch,
-                ePassOut,
-                eDrinkWiskey,
-                eDrinkBeer,
-                eNone)
+WISE_ENUM_CLASS((ExampleEvent, int32_t), eLookAtWatch, eStartWatch, ePassOut, eDrinkWiskey, eDrinkBeer, eNone)
 
-WISE_ENUM_CLASS((ExampleState, int32_t),
-                eTop,
-                eAwake,
-                eSober,
-                eDrunk,
-                eBored,
-                eUnconcious)
+WISE_ENUM_CLASS((ExampleState, int32_t), eTop, eAwake, eSober, eDrunk, eBored, eUnconcious)
 
 struct Logger {};  // placeholder
 

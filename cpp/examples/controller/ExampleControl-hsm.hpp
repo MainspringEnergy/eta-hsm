@@ -158,8 +158,8 @@ inline void examples::controller::Top::init(examples::controller::ExampleControl
     utils::TestLog::instance() << "init_Top" << std::endl;
 }
 
-// Entry, Exit, and During actions can now be given a more useful default behavior by passing an `eta_hsm::DefaultActions`
-// as an optional parameter to `ExampleControl`, so we do not need to implement them all here.
+// Entry, Exit, and During actions can now be given a more useful default behavior by passing an
+// `eta_hsm::DefaultActions` as an optional parameter to `ExampleControl`, so we do not need to implement them all here.
 // We still have the option of specializing some of them by specific state here if we want to.
 // template<> inline void Dead::during(ExampleControl& stateMachine) const { stateMachine.doSomethingDifferent(); }
 

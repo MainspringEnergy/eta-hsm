@@ -14,10 +14,7 @@ protected:
     Canonical canonical_hsm_;
 };
 
-TEST_F(CanonicalTest, InitialConditionsTest)
-{
-    EXPECT_EQ(canonical_hsm_.identify(), CanonicalState::eS11);
-}
+TEST_F(CanonicalTest, InitialConditionsTest) { EXPECT_EQ(canonical_hsm_.identify(), CanonicalState::eS11); }
 
 }  // namespace tests
 }  // namespace canonical

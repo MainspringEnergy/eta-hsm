@@ -14,10 +14,7 @@ protected:
     Player player_;
 };
 
-TEST_F(CdPlayerTest, InitialConditionsTest)
-{
-    EXPECT_EQ(player_.identify(), CdState::eStopped);
-}
+TEST_F(CdPlayerTest, InitialConditionsTest) { EXPECT_EQ(player_.identify(), CdState::eStopped); }
 
 }  // namespace tests
 }  // namespace cd_player

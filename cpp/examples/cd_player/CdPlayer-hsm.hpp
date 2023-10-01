@@ -11,8 +11,8 @@ namespace eta_hsm {
 
 template <>
 template <typename Current>
-inline void examples::cd_player::Top::handleEvent(examples::cd_player::Player& player,
-                                                  const Current& current, Event event) const
+inline void examples::cd_player::Top::handleEvent(examples::cd_player::Player& player, const Current& current,
+                                                  Event event) const
 {
     switch (event)
     {
@@ -26,8 +26,8 @@ inline void examples::cd_player::Top::handleEvent(examples::cd_player::Player& p
 
 template <>
 template <typename Current>
-inline void examples::cd_player::Stopped::handleEvent(examples::cd_player::Player& player,
-                                                      const Current& current, Event event) const
+inline void examples::cd_player::Stopped::handleEvent(examples::cd_player::Player& player, const Current& current,
+                                                      Event event) const
 {
     switch (event)
     {
@@ -58,8 +58,8 @@ inline void examples::cd_player::Stopped::handleEvent(examples::cd_player::Playe
 
 template <>
 template <typename Current>
-inline void examples::cd_player::Open::handleEvent(examples::cd_player::Player& player,
-                                                   const Current& current, Event event) const
+inline void examples::cd_player::Open::handleEvent(examples::cd_player::Player& player, const Current& current,
+                                                   Event event) const
 {
     switch (event)
     {
@@ -77,8 +77,8 @@ inline void examples::cd_player::Open::handleEvent(examples::cd_player::Player& 
 
 template <>
 template <typename Current>
-inline void examples::cd_player::Empty::handleEvent(examples::cd_player::Player& player,
-                                                    const Current& current, Event event) const
+inline void examples::cd_player::Empty::handleEvent(examples::cd_player::Player& player, const Current& current,
+                                                    Event event) const
 {
     switch (event)
     {
@@ -103,8 +103,8 @@ inline void examples::cd_player::Empty::handleEvent(examples::cd_player::Player&
 
 template <>
 template <typename Current>
-inline void examples::cd_player::Playing::handleEvent(examples::cd_player::Player& player,
-                                                      const Current& current, Event event) const
+inline void examples::cd_player::Playing::handleEvent(examples::cd_player::Player& player, const Current& current,
+                                                      Event event) const
 {
     switch (event)
     {
@@ -134,8 +134,8 @@ inline void examples::cd_player::Playing::handleEvent(examples::cd_player::Playe
 
 template <>
 template <typename Current>
-inline void examples::cd_player::Paused::handleEvent(examples::cd_player::Player& player,
-                                                     const Current& current, Event event) const
+inline void examples::cd_player::Paused::handleEvent(examples::cd_player::Player& player, const Current& current,
+                                                     Event event) const
 {
     switch (event)
     {
@@ -179,4 +179,4 @@ inline void examples::cd_player::Top::init(examples::cd_player::Player& player)
     utils::TestLog::instance() << "(init) TopState" << std::endl;
 }
 
-} // namespace eta_hsm
+}  // namespace eta_hsm

@@ -9,14 +9,7 @@ namespace eta_hsm {
 namespace examples {
 namespace cd_player {
 
-enum class CdEvent {
-    ePlay,
-    eOpenClose,
-    eStop,
-    eCdDetected,
-    ePause,
-    eEndPause
-};
+enum class CdEvent { ePlay, eOpenClose, eStop, eCdDetected, ePause, eEndPause };
 
 enum class CdState {
     eTop,
@@ -27,10 +20,8 @@ enum class CdState {
     ePaused,
 };
 
-using PlayerTraits = eta_hsm::StateMachineTraits<CdEvent,
-                                                 CdState,
-                                                 std::chrono::steady_clock,
-                                                 DefaultActions::eEntryExitOnly>;
+using PlayerTraits =
+    eta_hsm::StateMachineTraits<CdEvent, CdState, std::chrono::steady_clock, DefaultActions::eEntryExitOnly>;
 
 /// While it is possible to declare and manipulate states directly (see examples::cd_player_basic),
 /// inheriting from eta_hsm::StateMachine makes it somewhat easier and provides more
@@ -54,10 +45,12 @@ public:
     void stopped_again() { utils::TestLog::instance() << "(action) stopped_again" << std::endl; }
 
     template <CdState state>
-    void entry() {}
+    void entry()
+    {}
 
     template <CdState state>
-    void exit() {}
+    void exit()
+    {}
 
 private:
 };

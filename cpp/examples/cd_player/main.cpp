@@ -35,7 +35,7 @@ int main()
     player.dispatch(CdEvent::ePause);
 
     TestLog::instance() << "Inject stop event" << std::endl;
-    player.dispatch(CdEvent::STOP);
+    player.dispatch(CdEvent::eStop);
 
     // event leading to the same state
     // no action method called as it is not present in the transition table
@@ -58,4 +58,3 @@ int main()
 
     return 0;
 }  // main()
-

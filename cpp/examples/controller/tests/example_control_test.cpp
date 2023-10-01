@@ -14,10 +14,7 @@ protected:
     ExampleControl example_control_hsm_;
 };
 
-TEST_F(ExampleControlTest, InitialConditionsTest)
-{
-    EXPECT_EQ(example_control_hsm_.identify(), ExampleState::eSober);
-}
+TEST_F(ExampleControlTest, InitialConditionsTest) { EXPECT_EQ(example_control_hsm_.identify(), ExampleState::eSober); }
 
 TEST_F(ExampleControlTest, TransitionLoggingTest)
 {

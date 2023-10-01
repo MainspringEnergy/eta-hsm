@@ -1,13 +1,14 @@
 // CDPlayer.cpp
 
 #include "CDPlayer.hpp"
-#include "../../utils/TestLog.hpp"
+
 #include <chrono>
+
+#include "../../utils/TestLog.hpp"
 
 namespace eta_hsm {
 namespace examples {
 namespace cd_player {
-
 
 // The missing constructor
 Player::Player()

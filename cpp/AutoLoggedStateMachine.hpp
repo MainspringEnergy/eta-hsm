@@ -10,16 +10,13 @@ namespace eta_hsm {
 
 // using Format = char[eta::target_log::kFormatMax-1];
 
-template<typename SM, typename StateMachineTraits, typename Logger>
-class AutoLoggedStateMachine : public eta_hsm::StateMachine<SM, StateMachineTraits>
-{
+template <typename SM, typename StateMachineTraits, typename Logger>
+class AutoLoggedStateMachine : public eta_hsm::StateMachine<SM, StateMachineTraits> {
 public:
-    AutoLoggedStateMachine(const std::string& name, Logger* logger=nullptr)
-        : mName{name}
-        , mpLogger{logger}
+    AutoLoggedStateMachine(const std::string& name, Logger* logger = nullptr) : mName{name}, mpLogger{logger}
     {
-//        std::strcpy(mTransitionFormat, name.c_str());
-//        std::strcat(mTransitionFormat, " HSM transitioning from %s to %s due to %s");
+        //        std::strcpy(mTransitionFormat, name.c_str());
+        //        std::strcat(mTransitionFormat, " HSM transitioning from %s to %s due to %s");
     }
 
     virtual ~AutoLoggedStateMachine() {}
@@ -34,12 +31,13 @@ public:
     }
 
     /// Friend the LeafState so that it can access `next` below without exposing it to the world
-    template<typename Traits, typename Parent>
+    template <typename Traits, typename Parent>
     friend struct LeafState;
 
 private:
     /// States use this function to set the next (current) state of the state machine
-    void next(const eta_hsm::TopState<StateTraits<SM, typename StateMachineTraits::StateEnum, StateMachineTraits::StateEnum::eTop>>& state)
+    void next(const eta_hsm::TopState<
+              StateTraits<SM, typename StateMachineTraits::StateEnum, StateMachineTraits::StateEnum::eTop>>& state)
     {
         // Most instances of hsm::StateMachine use something like "Transition<Top, Top, Top>"
         // in their constructors to initialize the mState pointer.  This is not ideal, but arguably
@@ -58,9 +56,9 @@ private:
                 static_assert(wise_enum::is_wise_enum_v<typename StateMachineTraits::Event>, "Ignorant Event Enum");
 
                 // mpLogger->printf(mTransitionFormat, originState, destinationState, mEventDispatched);
-                *mpLogger << mName << " HSM transitioning from " << wise_enum::to_string(originState)
-                          << " to " << wise_enum::to_string(destinationState)
-                          << " due to " << wise_enum::to_string(mEventDispatched) << std::endl;
+                *mpLogger << mName << " HSM transitioning from " << wise_enum::to_string(originState) << " to "
+                          << wise_enum::to_string(destinationState) << " due to "
+                          << wise_enum::to_string(mEventDispatched) << std::endl;
             }
         }
 
@@ -69,12 +67,11 @@ private:
         mStateInitialized = true;
     }
 
-    bool mStateInitialized {false};
-    typename StateMachineTraits::Event mEventDispatched {StateMachineTraits::Event::eNone};
+    bool mStateInitialized{false};
+    typename StateMachineTraits::Event mEventDispatched{StateMachineTraits::Event::eNone};
     // Format mTransitionFormat {};
-    std::string mName {};
+    std::string mName{};
     Logger* mpLogger;
 };
 
-} // namespace eta-hsm
-
+}  // namespace eta_hsm
