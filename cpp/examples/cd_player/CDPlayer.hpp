@@ -27,9 +27,9 @@ enum class CdState {
     ePaused,
 };
 
-using PlayerTraits = eta_hsm::StateMachineTraits<std::chrono::steady_clock,
-                                                 CdEvent,
+using PlayerTraits = eta_hsm::StateMachineTraits<CdEvent,
                                                  CdState,
+                                                 std::chrono::steady_clock,
                                                  DefaultActions::eEntryExitOnly>;
 
 /// While it is possible to declare and manipulate states directly (see examples::cd_player_basic),
@@ -37,6 +37,8 @@ using PlayerTraits = eta_hsm::StateMachineTraits<std::chrono::steady_clock,
 /// advanced capabilities that will be useful for more complex situations (see examples::controller).
 class Player : public eta_hsm::StateMachine<Player, PlayerTraits> {
 public:
+    using Input = EmptyType;  // should this really be necessary if we are using eEntryExitOnly?
+
     Player();
 
     // Dummy action functions
@@ -50,6 +52,12 @@ public:
     void resume_playback() { utils::TestLog::instance() << "(action) resume_playback" << std::endl; }
     void stop_and_open() { utils::TestLog::instance() << "(action) stop_and_open" << std::endl; }
     void stopped_again() { utils::TestLog::instance() << "(action) stopped_again" << std::endl; }
+
+    template <CdState state>
+    void entry() {}
+
+    template <CdState state>
+    void exit() {}
 
 private:
 };

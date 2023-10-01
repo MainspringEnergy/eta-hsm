@@ -31,19 +31,19 @@ inline void examples::cd_player::Stopped::handleEvent(examples::cd_player::Playe
 {
     switch (event)
     {
-        case CdEvent::PLAY:
+        case examples::cd_player::CdEvent::ePlay:
         {
-            Transition<Current, ThisState, Playing> t(player);
+            Transition<Current, ThisState, examples::cd_player::Playing> t(player);
             player.start_playback();
             return;
         }
-        case CdEvent::OPEN_CLOSE:
+        case examples::cd_player::CdEvent::eOpenClose:
         {
-            Transition<Current, ThisState, Open> t(player);
+            Transition<Current, ThisState, examples::cd_player::Open> t(player);
             player.open_drawer();
             return;
         }
-        case CdEvent::STOP:
+        case examples::cd_player::CdEvent::eStop:
         {
             // no transition
             player.stopped_again();
@@ -63,9 +63,9 @@ inline void examples::cd_player::Open::handleEvent(examples::cd_player::Player& 
 {
     switch (event)
     {
-        case CdEvent::OPEN_CLOSE:
+        case examples::cd_player::CdEvent::eOpenClose:
         {
-            Transition<Current, ThisState, Empty> t(player);
+            Transition<Current, ThisState, examples::cd_player::Empty> t(player);
             player.close_drawer();
             return;
         }
@@ -82,16 +82,16 @@ inline void examples::cd_player::Empty::handleEvent(examples::cd_player::Player&
 {
     switch (event)
     {
-        case CdEvent::CD_DETECTED:
+        case examples::cd_player::CdEvent::eCdDetected:
         {
             // TODO: check for disk tye
-            Transition<Current, ThisState, Stopped> t(player);
+            Transition<Current, ThisState, examples::cd_player::Stopped> t(player);
             player.store_cd_info();
             return;
         }
-        case CdEvent::OPEN_CLOSE:
+        case examples::cd_player::CdEvent::eOpenClose:
         {
-            Transition<Current, ThisState, Open> t(player);
+            Transition<Current, ThisState, examples::cd_player::Open> t(player);
             player.open_drawer();
             return;
         }
@@ -108,21 +108,21 @@ inline void examples::cd_player::Playing::handleEvent(examples::cd_player::Playe
 {
     switch (event)
     {
-        case CdEvent::STOP:
+        case examples::cd_player::CdEvent::eStop:
         {
-            Transition<Current, ThisState, Stopped> t(player);
+            Transition<Current, ThisState, examples::cd_player::Stopped> t(player);
             player.stop_playback();
             return;
         }
-        case CdEvent::PAUSE:
+        case examples::cd_player::CdEvent::ePause:
         {
-            Transition<Current, ThisState, Paused> t(player);
+            Transition<Current, ThisState, examples::cd_player::Paused> t(player);
             player.pause_playback();
             return;
         }
-        case CdEvent::OPEN_CLOSE:
+        case examples::cd_player::CdEvent::eOpenClose:
         {
-            Transition<Current, ThisState, Open> t(player);
+            Transition<Current, ThisState, examples::cd_player::Open> t(player);
             player.stop_and_open();
             return;
         }
@@ -139,21 +139,21 @@ inline void examples::cd_player::Paused::handleEvent(examples::cd_player::Player
 {
     switch (event)
     {
-        case CdEvent::STOP:
+        case examples::cd_player::CdEvent::eStop:
         {
-            Transition<Current, ThisState, Stopped> t(player);
+            Transition<Current, ThisState, examples::cd_player::Stopped> t(player);
             player.stop_playback();
             return;
         }
-        case CdEvent::END_PAUSE:
+        case examples::cd_player::CdEvent::eEndPause:
         {
-            Transition<Current, ThisState, Playing> t(player);
+            Transition<Current, ThisState, examples::cd_player::Playing> t(player);
             player.resume_playback();
             return;
         }
-        case CdEvent::OPEN_CLOSE:
+        case examples::cd_player::CdEvent::eOpenClose:
         {
-            Transition<Current, ThisState, Open> t(player);
+            Transition<Current, ThisState, examples::cd_player::Open> t(player);
             player.stop_and_open();
             return;
         }

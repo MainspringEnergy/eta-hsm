@@ -52,7 +52,7 @@ struct ExampleControlTraits {
 /// With eta-hsm, the top-level controller can BE the state machine
 class ExampleControl : public eta_hsm::StateMachine<ExampleControl, ExampleControlTraits> {
 public:
-    using Input = EmptyType;  // rely on empty during() as an example of legacy control
+    using Input = EmptyType;
 
     ExampleControl();
     virtual ~ExampleControl();
