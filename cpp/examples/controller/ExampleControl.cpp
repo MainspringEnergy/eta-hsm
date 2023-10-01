@@ -9,7 +9,7 @@ namespace examples {
 namespace controller {
 
 ExampleControl::ExampleControl()
-//: StateMachine("ExampleControl")
+    : AutoLoggedStateMachine("ExampleControl", &utils::TestLog::instance())
 {
     // We are responsible for initializing mState to something useful
     // In order to make sure we hit all of the correct entry methods

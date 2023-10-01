@@ -4,9 +4,10 @@
 #include <memory>
 #include <queue>
 
-#include "../../Hsm.hpp"
+#include "../../AutoLoggedStateMachine.hpp"
 #include "../../utils/TestLog.hpp"
 #include "../../utils/Timer.hpp"
+#include "wise_enum/wise_enum.h"
 
 namespace eta_hsm {
 namespace examples {
@@ -17,23 +18,21 @@ namespace controller {
 
 using Real = float;
 
-enum class ExampleEvent {
-    eLookAtWatch,
-    eStartWatch,
-    ePassOut,
-    eDrinkWiskey,
-    eDrinkBeer,
-    eNone,
-};
+WISE_ENUM_CLASS((ExampleEvent, int32_t),
+                eLookAtWatch,
+                eStartWatch,
+                ePassOut,
+                eDrinkWiskey,
+                eDrinkBeer,
+                eNone)
 
-enum class ExampleState {
-    eTop,
-    eAwake,
-    eSober,
-    eDrunk,
-    eBored,
-    eUnconcious,
-};
+WISE_ENUM_CLASS((ExampleState, int32_t),
+                eTop,
+                eAwake,
+                eSober,
+                eDrunk,
+                eBored,
+                eUnconcious)
 
 struct Logger {};  // placeholder
 
@@ -50,7 +49,7 @@ struct ExampleControlTraits {
 };
 
 /// With eta-hsm, the top-level controller can BE the state machine
-class ExampleControl : public eta_hsm::StateMachine<ExampleControl, ExampleControlTraits> {
+class ExampleControl : public eta_hsm::AutoLoggedStateMachine<ExampleControl, ExampleControlTraits, utils::TestLog> {
 public:
     using Input = EmptyType;
 
@@ -79,14 +78,14 @@ public:
     template <ExampleState state>
     void entry()  // If called by hsm within "update", input is available as mInput
     {
-        // TestLog::instance() << "enter State " << wise_enum::to_string(state) << std::endl;
+        utils::TestLog::instance() << "enter State " << wise_enum::to_string(state) << std::endl;
         mAccumultedEntryExit += static_cast<int>(state);
     }
 
     template <ExampleState state>
     void exit()  // If called by hsm within "update", input is available as mInput
     {
-        // TestLog::instance() << "exit State " << wise_enum::to_string(state) << std::endl;
+        utils::TestLog::instance() << "exit State " << wise_enum::to_string(state) << std::endl;
         mAccumultedEntryExit -= static_cast<int>(state);
     }
 

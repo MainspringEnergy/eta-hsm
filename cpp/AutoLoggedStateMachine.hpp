@@ -58,7 +58,9 @@ private:
                 static_assert(wise_enum::is_wise_enum_v<typename StateMachineTraits::Event>, "Ignorant Event Enum");
 
                 // mpLogger->printf(mTransitionFormat, originState, destinationState, mEventDispatched);
-                *mpLogger << mName << " HSM transitioning from " << originState << " to " << destinationState << " due to " << mEventDispatched << std::endl;
+                *mpLogger << mName << " HSM transitioning from " << wise_enum::to_string(originState)
+                          << " to " << wise_enum::to_string(destinationState)
+                          << " due to " << wise_enum::to_string(mEventDispatched) << std::endl;
             }
         }
 
