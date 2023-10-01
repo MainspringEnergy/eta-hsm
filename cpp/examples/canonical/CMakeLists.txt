@@ -4,3 +4,5 @@ add_library(canonical_lib
 target_link_libraries(canonical_lib
         eta_hsm_lib
 )
+
+add_subdirectory(tests)

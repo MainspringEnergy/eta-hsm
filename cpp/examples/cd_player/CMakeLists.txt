@@ -11,3 +11,5 @@ add_executable(cd_player
 target_link_libraries(cd_player
         cd_player_lib
 )
+
+add_subdirectory(tests)
