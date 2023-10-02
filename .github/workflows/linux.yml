@@ -1,6 +1,6 @@
 name: Linux_CI
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
   python_linting:
