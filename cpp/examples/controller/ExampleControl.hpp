@@ -4,35 +4,23 @@
 #include <memory>
 #include <queue>
 
-#include "../../Hsm.hpp"
+#include "../../AutoLoggedStateMachine.hpp"
 #include "../../utils/TestLog.hpp"
 #include "../../utils/Timer.hpp"
+#include "wise_enum/wise_enum.h"
 
 namespace eta_hsm {
 namespace examples {
 namespace controller {
 
-/// Top-level controller for APU control process
+/// Example of a "hybrid state machine" that integrates a "controller"
+/// for "continuous state" with a traditional discrete state machine.
 
 using Real = float;
 
-enum class ExampleEvent {
-    eLookAtWatch,
-    eStartWatch,
-    eDie,
-    eDrinkWiskey,
-    eDrinkBeer,
-    eNone,
-};
+WISE_ENUM_CLASS((ExampleEvent, int32_t), eLookAtWatch, eStartWatch, ePassOut, eDrinkWiskey, eDrinkBeer, eNone)
 
-enum class ExampleState {
-    eTop,
-    eAlive,
-    eSober,
-    eDrunk,
-    eBored,
-    eDead,
-};
+WISE_ENUM_CLASS((ExampleState, int32_t), eTop, eAwake, eSober, eDrunk, eBored, eUnconcious)
 
 struct Logger {};  // placeholder
 
@@ -44,23 +32,19 @@ struct ExampleControlTraits {
     using Clock = std::chrono::steady_clock;
     using Event = ExampleEvent;
     using StateEnum = ExampleState;
-
-    //    ETA_NAMED_EVENT(StateTransition, "StateTransitionEventName", (Event, utils), (StateEnum, from), (StateEnum,
-    //    to));
-
     static constexpr DefaultActions kDefaultActions = eta_hsm::DefaultActions::eControlUpdate;
     static constexpr bool kClearTimersOnExit = true;
 };
 
-/// With eta::hsm, the top-level controller can BE the state machine
-class ExampleControl : public eta_hsm::StateMachine<ExampleControl, ExampleControlTraits> {
+/// With eta-hsm, the top-level controller can BE the state machine
+class ExampleControl : public eta_hsm::AutoLoggedStateMachine<ExampleControl, ExampleControlTraits, utils::TestLog> {
 public:
-    using Input = EmptyType;  // rely on empty during() as an example of legacy control
+    using Input = EmptyType;
 
     ExampleControl();
     virtual ~ExampleControl();
 
-    using Parent = eta_hsm::StateMachine<ExampleControl, ExampleControlTraits>;
+    // using Parent = eta_hsm::StateMachine<ExampleControl, ExampleControlTraits>;
 
     friend class TopState<ExampleControl>;
 
@@ -72,7 +56,7 @@ public:
     /// Get a reference to the EventScheduler interface for scheduling events
     EventScheduler& eventScheduler() { return mEventScheduler; }
 
-    /// geneirc top-level update
+    /// generic top-level update
     void update(const controller::Input& input);
 
     /// Templatized state-specific update functions
@@ -82,29 +66,29 @@ public:
     template <ExampleState state>
     void entry()  // If called by hsm within "update", input is available as mInput
     {
-        // TestLog::instance() << "enter State " << wise_enum::to_string(state) << std::endl;
+        utils::TestLog::instance() << "enter State " << wise_enum::to_string(state) << std::endl;
         mAccumultedEntryExit += static_cast<int>(state);
     }
 
     template <ExampleState state>
     void exit()  // If called by hsm within "update", input is available as mInput
     {
-        // TestLog::instance() << "exit State " << wise_enum::to_string(state) << std::endl;
+        utils::TestLog::instance() << "exit State " << wise_enum::to_string(state) << std::endl;
         mAccumultedEntryExit -= static_cast<int>(state);
     }
 
     // Add events for the state machine to process
-    // We could eventually discern priority internally based upon the utils,
+    // We could eventually discern priority internally based upon the event,
     // but for simplicity, let's just assume for now that the user knows urgency.
     void addEvent(ExampleEvent evt) { mEventBucket.addEvent(evt); }
 
-    // Silly stuff for the initial example
+    // Silly stuff for the initial example to demonstrate control of "continous state"
     void increaseBac(Real amt);
     Real getBac() { return mBac; }
 
     // Accessor for some controller status
-    void alive(bool status) { mAlive = status; }
-    bool alive() const { return mAlive; }
+    void awake(bool status) { mAwake = status; }
+    bool awake() const { return mAwake; }
 
     // Accessor to support testing
     int accumulatedEntryExit() { return mAccumultedEntryExit; }
@@ -122,7 +106,7 @@ private:
 
     // Additional stateful data
     Real mBac{0.0};
-    bool mAlive{true};
+    bool mAwake{true};
 
     // Just using this as a silly example and to support unit testing
     int mAccumultedEntryExit{0};
@@ -133,11 +117,11 @@ using ExampleTraits = StateTraits<ExampleControl, ExampleState, kState>;
 
 /// Declare the states that exist in this example Hsm (and their relationships) here
 using Top = eta_hsm::TopState<ExampleTraits<ExampleState::eTop>>;
-using Alive = eta_hsm::CompState<ExampleTraits<ExampleState::eAlive>, Top>;
-using Sober = eta_hsm::LeafState<ExampleTraits<ExampleState::eSober>, Alive>;
-using Drunk = eta_hsm::LeafState<ExampleTraits<ExampleState::eDrunk>, Alive>;
-using Bored = eta_hsm::LeafState<ExampleTraits<ExampleState::eBored>, Alive>;
-using Dead = eta_hsm::LeafState<ExampleTraits<ExampleState::eDead>, Top>;
+using Awake = eta_hsm::CompState<ExampleTraits<ExampleState::eAwake>, Top>;
+using Sober = eta_hsm::LeafState<ExampleTraits<ExampleState::eSober>, Awake>;
+using Drunk = eta_hsm::LeafState<ExampleTraits<ExampleState::eDrunk>, Awake>;
+using Bored = eta_hsm::LeafState<ExampleTraits<ExampleState::eBored>, Awake>;
+using Unconcious = eta_hsm::LeafState<ExampleTraits<ExampleState::eUnconcious>, Top>;
 
 }  // namespace controller
 }  // namespace examples

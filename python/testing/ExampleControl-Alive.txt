@@ -2,10 +2,10 @@
 state Alive {
   [*] --> Sober
   Alive : entry / TestLog::instance() << "enter_Alive " << std::endl;
-  Alive : entry / mAccumultedEntryExit += static_cast<int>(ExampleState::eAlive);
+  Alive : entry / mAccumultedEntryExit += static_cast<int>(ExampleState::eAwake);
   Alive : entry / mAlive = true;
   Alive : exit / TestLog::instance() << "exit_Alive " << std::endl;
-  Alive : exit / mAccumultedEntryExit -= static_cast<int>(ExampleState::eAlive);
+  Alive : exit / mAccumultedEntryExit -= static_cast<int>(ExampleState::eAwake);
   Alive : exit / mAlive = false;
   Alive --> OutOfScope : eDie
   state Sober {

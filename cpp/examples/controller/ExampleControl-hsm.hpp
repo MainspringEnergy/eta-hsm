@@ -1,4 +1,4 @@
-// eta/hsm/ExampleControl-hsm.hpp
+// ExampleControl-hsm.hpp
 
 #pragma once
 
@@ -7,7 +7,7 @@
 // The only thing that we should be adding below are eventHandler() and during() for each state.
 namespace eta_hsm {
 
-// Do NOT open up eta::example_control namespace in the header
+// Do NOT open up eta_hsm::examples::controller namespace in the header
 
 template <>
 template <typename Current>
@@ -26,34 +26,34 @@ inline void examples::controller::Top::handleEvent(examples::controller::Example
 
 template <>
 template <typename Current>
-inline void examples::controller::Alive::handleEvent(examples::controller::ExampleControl& stateMachine,
+inline void examples::controller::Awake::handleEvent(examples::controller::ExampleControl& stateMachine,
                                                      const Current& currentState, Event event) const
 {
-    utils::TestLog::instance() << "Alive::handleEvent()" << std::endl;
+    utils::TestLog::instance() << "Awake::handleEvent()" << std::endl;
     switch (event)
     {
         case examples::controller::ExampleEvent::eDrinkBeer:
         {
             // We can cause state transitions based upon events, but we can
             // also take non-transitioning actions as well.
-            utils::TestLog::instance() << "Alive and drinking beer!" << std::endl;
+            utils::TestLog::instance() << "Awake and drinking beer!" << std::endl;
             stateMachine.increaseBac(0.025);
             return;
         }
         case examples::controller::ExampleEvent::eDrinkWiskey:
         {
             // This is the strong stuff, so we take a different action
-            utils::TestLog::instance() << "Alive and drinking whiskey!" << std::endl;
+            utils::TestLog::instance() << "Awake and drinking whiskey!" << std::endl;
             stateMachine.increaseBac(0.05);
             return;
         }
-        case examples::controller::ExampleEvent::eDie:
+        case examples::controller::ExampleEvent::ePassOut:
         {  // Note: order of these case statements does NOT matter as the
            // StateMachine
             //       is only ever dispatched with a single utils.
             // In other words, utils prioritization happens long before we get here.
             utils::TestLog::instance() << "Party over..." << std::endl;
-            Transition<Current, ThisState, examples::controller::Dead> t(stateMachine);
+            Transition<Current, ThisState, examples::controller::Unconcious> t(stateMachine);
             return;
         }
         case examples::controller::ExampleEvent::eStartWatch:
@@ -78,8 +78,8 @@ inline void examples::controller::Sober::handleEvent(examples::controller::Examp
     utils::TestLog::instance() << "Sober::handleEvent()" << std::endl;
     switch (event)
     {
-        // By choosing to handle an utils in the substate, we can override the behavior
-        // declared in the superstate (Alive)
+        // By choosing to handle an event in the substate, we can override the behavior
+        // declared in the superstate (Awake)
         case examples::controller::ExampleEvent::eDrinkBeer:
         {
             utils::TestLog::instance() << "Sober and drinking beer!" << std::endl;
@@ -120,8 +120,8 @@ inline void examples::controller::Drunk::handleEvent(examples::controller::Examp
     utils::TestLog::instance() << "Drunk::handleEvent()" << std::endl;
     switch (event)
     {
-        // By choosing to handle an utils in the substate, we can override the behavior
-        // declared in the superstate (Alive)
+        // By choosing to handle an event in the substate, we can override the behavior
+        // declared in the superstate (Awake)
         case examples::controller::ExampleEvent::eLookAtWatch:
         {
             utils::TestLog::instance() << "Drunk and looking at watch" << std::endl;
@@ -135,31 +135,31 @@ inline void examples::controller::Drunk::handleEvent(examples::controller::Examp
 }
 
 // We don't have to implement State::handleEvent at all if it does not do anything different than superstate
-// e.g. Bored::handleEvent() just does the same (default) behavior implemented in Alive::handleEvent()
-// e.g. Dead::handleEvent() doesn't have to do anything at all!
+// e.g. Bored::handleEvent() just does the same (default) behavior implemented in Awake::handleEvent()
+// e.g. Unconscious::handleEvent() doesn't have to do anything at all!
 
 // We do have to declare the initialization behavior of any composite states
-// This can optionally take additional acctions, but at a minimum, they must declare
+// This can optionally take additional actions, but at a minimum, they must declare
 // initialization of their default substate.
 // Note: They must be declared in bottom-up order.
 template <>
-inline void examples::controller::Alive::init(examples::controller::ExampleControl& stateMachine)
+inline void examples::controller::Awake::init(examples::controller::ExampleControl& stateMachine)
 {
     // This declares which substate we default into
     Init<examples::controller::Sober> i(stateMachine);
-    utils::TestLog::instance() << "init_Alive" << std::endl;
+    utils::TestLog::instance() << "init_Awake" << std::endl;
 }
 
 template <>
 inline void examples::controller::Top::init(examples::controller::ExampleControl& stateMachine)
 {
     // This declares which substate we default into
-    Init<examples::controller::Alive> i(stateMachine);
+    Init<examples::controller::Awake> i(stateMachine);
     utils::TestLog::instance() << "init_Top" << std::endl;
 }
 
-// Entry, Exit, and During actions can now be given a more useful default behavior by passing an `hsm::DefaultActions`
-// as an optional parameter to `ExampleControl`, so we do not need to implement them all here.
+// Entry, Exit, and During actions can now be given a more useful default behavior by passing an
+// `eta_hsm::DefaultActions` as an optional parameter to `ExampleControl`, so we do not need to implement them all here.
 // We still have the option of specializing some of them by specific state here if we want to.
 // template<> inline void Dead::during(ExampleControl& stateMachine) const { stateMachine.doSomethingDifferent(); }
 
