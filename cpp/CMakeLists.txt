@@ -13,6 +13,8 @@ endif ()
 
 include(CTest)
 include(FetchContent)
+include(GenerateExportHeader)
+include(CMakePackageConfigHelpers)
 
 find_package(GTest)
 if(GTest_FOUND)
@@ -28,12 +30,8 @@ else()
     FetchContent_MakeAvailable(googletest)
 endif()
 
-
-# wise_enum doesn't seem to provide a config.cmake file, but since it is header only,
-# we can probably get away with just adding it to the include path
-# find_package(wise_enum REQUIRED)
-include_directories(/usr/local/include/wise_enum)
-
+# TODO: replace shenanigans below with find_package()
+# find_package(WiseEnum REQUIRED)
 if(EXISTS "/usr/local/include/wise_enum/wise_enum.h")
     message("Found previously installed wise_enum library")
     include_directories(/usr/local/include/wise_enum)
@@ -53,10 +51,55 @@ else()
     include_directories(SYSTEM ${FETCHCONTENT_BASE_DIR})
 endif()
 
-add_library(eta_hsm_lib
+add_library(eta_hsm
     Hsm.cpp
     AutoLoggedStateMachine.cpp
 )
+generate_export_header(eta_hsm)
+install(TARGETS eta_hsm  EXPORT EtaHsmTargets
+        DESTINATION lib)
+install(
+    FILES
+        Hsm.hpp
+        Hsm-inl.hpp
+        AutoLoggedStateMachine.hpp
+    DESTINATION include/eta_hsm
+)
+
+write_basic_package_version_file(
+        "${CMAKE_CURRENT_BINARY_DIR}/EtaHsmConfigVersion.cmake"
+        VERSION ${EtaHsm_VERSION}
+        COMPATIBILITY AnyNewerVersion
+)
+
+export(EXPORT EtaHsmTargets
+        FILE "${CMAKE_CURRENT_BINARY_DIR}/EtaHsmTargets.cmake"
+        NAMESPACE EtaHsm::
+)
+configure_file(cmake/EtaHsmConfig.cmake
+        "${CMAKE_CURRENT_BINARY_DIR}/EtaHsmConfig.cmake"
+        COPYONLY
+)
+
+set(ConfigPackageLocation lib/cmake/EtaHsm)
+install(EXPORT EtaHsmTargets
+    FILE
+        EtaHsmTargets.cmake
+    NAMESPACE
+        EtaHsm::
+    DESTINATION
+        ${ConfigPackageLocation}
+)
+install(
+        FILES
+        cmake/EtaHsmConfig.cmake
+        "${CMAKE_CURRENT_BINARY_DIR}/EtaHsmConfigVersion.cmake"
+        DESTINATION
+        ${ConfigPackageLocation}
+        COMPONENT
+        Devel
+)
+
 
 add_subdirectory(examples)
 add_subdirectory(tests)
